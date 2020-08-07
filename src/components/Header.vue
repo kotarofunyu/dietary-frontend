@@ -1,18 +1,19 @@
 <template>
-   <div>
-     <nav>
-       <div class="nav-wrapper">
-         <router-link to="/" class="brand-logo">dietary</router-link>
-         <ul id="nav-mobile" class="right">
-           <li><router-link to="/create">create record</router-link></li>
-           <li><router-link to="/page2">See Records</router-link></li>
-           <li><router-link to="/signup" v-if="!signedIn">Sign up</router-link></li>
-           <li><router-link to="/signin" v-if="!signedIn">Sign in</router-link></li>
-           <li><a href="/" v-if="signedIn" @click="signOut">Sign out</a></li>
-         </ul>
-       </div>
-     </nav>
-   </div>
+  <div>
+    <nav>
+      <div class="nav-wrapper">
+        <router-link to="/" class="brand-logo">dietary</router-link>
+        <ul id="nav-mobile" class="right">
+          <li><router-link to="/record">record</router-link></li>
+          <li><router-link to="/create">create record</router-link></li>
+          <li><router-link to="/user">user</router-link></li>
+          <li><router-link to="/signup" v-if="!signedIn">Sign up</router-link></li>
+          <li><router-link to="/signin" v-if="!signedIn">Sign in</router-link></li>
+          <li><a href="/" v-if="signedIn" @click="signOut">Sign out</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
 </template>
 
 <script>

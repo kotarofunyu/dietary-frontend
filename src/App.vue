@@ -1,9 +1,10 @@
 <template>
   <v-app>
     <Header/>
-    <v-main>
+    <!-- <v-main>
       <Home/>
-    </v-main>
+    </v-main> -->
+    <router-view/>
   </v-app>
 </template>
 

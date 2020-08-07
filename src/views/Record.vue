@@ -1,18 +1,16 @@
 <template>
-  <div class="home">
+  <div class="record">
+    体重記録だよ
     <Form />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
 import Form from '../components/Form'
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld,
     Form
   }
 }
