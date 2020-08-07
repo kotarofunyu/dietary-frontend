@@ -30,13 +30,13 @@ securedAxiosInstance.interceptors.request.use((config) => {
 })
 
 securedAxiosInstance.interceptors.response.use(null, (error) => {
-  if (error.message && error.response.config && error.response.status == 401) {
+  if (error.message && error.response.config && error.response.status === 401) {
     return plainAxiosInstance
       .post('/refresh', {}, { headers: { 'X-CSRF-TOKEN': localStorage.csrf } })
       .then((response) => {
         localStorage.csrf = response.data.csrf
         localStorage.signedIn = true
-        let retryConfig = error.response.config
+        const retryConfig = error.response.config
         retryConfig.headers['X-CSRF-TOKEN'] = localStorage.csrf
         return plainAxiosInstance.request(retryConfig)
       })

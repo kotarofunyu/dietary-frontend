@@ -6,6 +6,8 @@
       <router-link to="/page1">Page1</router-link>
       <router-link to="/page2">Page2</router-link>
       <router-link to="/page3">Page3</router-link>
+      <router-link to="/signIn" v-if="!signedIn">ログイン</router-link>
+      <router-link to="mypage" v-if="signedIn">マイページ</router-link>
     </div>
     <router-view/>
   </div>
@@ -33,3 +35,30 @@
   }
 }
 </style>
+
+<script>
+  import { mapState } from 'vuex'
+
+  export default {
+    name: 'Header',
+    computed: mapState([
+      'signedIn'
+    ]),
+    mounted: function() {
+      this.$store.dispatch('doFetchSignedIn')
+    },
+    methods: {
+      setError(error, text) {
+        this.error = (error.response && error.response.data && error.response.data.error) || text
+      },
+      signOut() {
+        this.$http.secured.delete(`/signin`)
+          .then(response => {
+            delete localStorage.csrf
+            delete localStorage.signedIn
+          })
+          .catch(error => this.setError(error, 'Cannot sign out'))
+      }
+    }
+  }
+</script>

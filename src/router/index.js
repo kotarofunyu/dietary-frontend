@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Page1 from '../components/page1.vue'
 import Page2 from '../components/page2.vue'
 import Page3 from '../components/page3.vue'
+import Signin from '../components/Signin.vue'
 
 Vue.use(VueRouter)
 
@@ -36,6 +37,11 @@ const routes = [
     path: '/page3',
     name: 'Page3',
     component: Page3
+  },
+  {
+    path: '/signin',
+    name: 'Singin',
+    component: Signin
   }
 ]
 
