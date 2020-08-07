@@ -4,7 +4,9 @@
     <!-- <v-main>
       <Home/>
     </v-main> -->
-    <router-view/>
+    <v-main>
+      <router-view/>
+    </v-main>
   </v-app>
 </template>
 

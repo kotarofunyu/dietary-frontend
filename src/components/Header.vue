@@ -13,6 +13,31 @@
         </ul>
       </div>
     </nav>
+    <div id="test">
+      <v-navigation-drawer
+        app
+        dark
+        expand-on-hover
+        floating
+      >
+        <v-list>
+          <v-list-item
+            v-for="item in items"
+            :key="item.title"
+            link
+          >
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>
+                {{ item.title }}
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-navigation-drawer>
+    </div>
   </div>
 </template>
 
@@ -21,6 +46,15 @@
 
   export default {
     name: 'Header',
+    data () {
+      return {
+        items: [
+          { title: '体重記録', icon: 'account' },
+          { title: '記録する', icon: 'account_box' },
+          { title: 'ユーザー', icon: 'account_box' }
+        ]
+      }
+    },
     computed: mapState([
       'signedIn'
     ]),
