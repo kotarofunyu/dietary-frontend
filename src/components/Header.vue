@@ -2,9 +2,10 @@
    <div>
      <nav>
        <div class="nav-wrapper">
-         <router-link to="/" class="brand-logo">Bookshelf</router-link>
+         <router-link to="/" class="brand-logo">dietary</router-link>
          <ul id="nav-mobile" class="right">
-           <li><router-link to="/create">本の登録</router-link></li>
+           <li><router-link to="/create">create record</router-link></li>
+           <li><router-link to="/page2">See Records</router-link></li>
            <li><router-link to="/signup" v-if="!signedIn">Sign up</router-link></li>
            <li><router-link to="/signin" v-if="!signedIn">Sign in</router-link></li>
            <li><a href="/" v-if="signedIn" @click="signOut">Sign out</a></li>
