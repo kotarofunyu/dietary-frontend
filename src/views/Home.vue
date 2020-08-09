@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <Form />
+    <p>ホームですよ！！</p>
   </div>
 </template>
 

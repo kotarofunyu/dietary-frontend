@@ -1,17 +1,17 @@
 <template>
   <div class="record">
     体重記録だよ
-    <Form />
+    <Bar/>
   </div>
 </template>
 
 <script>
-import Form from '../components/Form'
+import Bar from '../components/Bar'
 
 export default {
   name: 'Home',
   components: {
-    Form
+    Bar
   }
 }
 </script>

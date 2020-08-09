@@ -1,30 +1,16 @@
 <template>
   <div>
-    <nav>
-      <div class="nav-wrapper">
-        <router-link to="/" class="brand-logo">dietary</router-link>
-        <ul id="nav-mobile" class="right">
-          <li><router-link to="/record">record</router-link></li>
-          <li><router-link to="/create">create record</router-link></li>
-          <li><router-link to="/user">user</router-link></li>
-          <li><router-link to="/signup" v-if="!signedIn">Sign up</router-link></li>
-          <li><router-link to="/signin" v-if="!signedIn">Sign in</router-link></li>
-          <li><a href="/" v-if="signedIn" @click="signOut">Sign out</a></li>
-        </ul>
-      </div>
-    </nav>
     <div id="test">
       <v-navigation-drawer
         app
         dark
-        expand-on-hover
         floating
       >
         <v-list>
           <v-list-item
             v-for="item in items"
             :key="item.title"
-            link
+            :to="item.link"
           >
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
@@ -36,6 +22,9 @@
             </v-list-item-content>
           </v-list-item>
         </v-list>
+        <router-link to="/signup" v-if="!signedIn">新規登録</router-link>
+        <router-link to="/signin" v-if="!signedIn">ログイン</router-link>
+        <a href="/" v-if="signedIn" @click="signOut">Sign out</a>
       </v-navigation-drawer>
     </div>
   </div>
@@ -49,9 +38,26 @@
     data () {
       return {
         items: [
-          { title: '体重記録', icon: 'account' },
-          { title: '記録する', icon: 'account_box' },
-          { title: 'ユーザー', icon: 'account_box' }
+          {
+            title: 'ホーム',
+            icon: 'mdi-home',
+            link: '/'
+          },
+          {
+            title: '記録閲覧',
+            icon: 'mdi-align-vertical-bottom',
+            link: '/record'
+          },
+          {
+            title: '記録する',
+            icon: 'mdi-lead-pencil',
+            link: '/create'
+          },
+          {
+            title: 'ユーザー',
+            icon: 'mdi-account',
+            link: '/user'
+          }
         ]
       }
     },
