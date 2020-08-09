@@ -1,45 +1,47 @@
 <script>
-  import { Bar } from 'vue-chartjs'
+  import { Line } from 'vue-chartjs'
   import axios from 'axios'
   export default {
-    name: 'Bar',
-    extends: Bar,
+    name: 'LineChart',
+    extends: Line,
     // props: ['chartdata', 'options'],
     data () {
       return {
-      data: {
-        labels: [],
-        data: []
-      },
-      options: {
-        responsive: true,
-        scales: {
-          xAxes: [{
-            scaleLabel: {
-              display: true,
-              labelString: 'Month'
+        data: {
+          labels: [],
+          datasets: [
+            {
+              label: "体重",
+              data: [10, 20, 30, 60]
             }
-          }],
-          yAxes: [{
-            ticks: {
-              beginAtZero: true,
-              stepSize: 10,
-            }
-          }]
+          ]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            xAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: 'Month'
+              }
+            }],
+            yAxes: [{
+              ticks: {
+                beginAtZero: true,
+                stepSize: 10,
+                min: 60
+              }
+            }]
+          }
         }
       }
-    }
     },
     mounted () {
-      console.log(this.data.labels)
       axios.get('http://localhost:3000/weights')
       .then(response => {
         console.log("とれたぜ")
-        console.log(response.data)
         this.data.labels = response.data.map(item => item.date)
-        this.data.data = response.data.map(item => item.weight)
-        console.log(this.data.labels)
-        console.log(this.data.data)
+        this.data.datasets[0].data = response.data.map(item => item.weight)
       })
       .catch(error => {
         if(error.response) {

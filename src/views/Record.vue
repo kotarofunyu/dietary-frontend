@@ -1,17 +1,17 @@
 <template>
   <div class="record">
     体重記録だよ
-    <Bar/>
+    <LineChart />
   </div>
 </template>
 
 <script>
-import Bar from '../components/Bar'
+import LineChart from '../components/Bar'
 
 export default {
   name: 'Home',
   components: {
-    Bar
+    LineChart
   }
 }
 </script>
