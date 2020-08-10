@@ -1,8 +1,14 @@
 <template>
   <div class="record">
     体重記録だよ
-    <LineChart />
-    <RecordList />
+    <v-container>
+      <v-row>
+        <LineChart :width="800" :height="500" />
+      </v-row>
+      <v-row>
+        <RecordList />
+      </v-row>
+    </v-container>
   </div>
 </template>
 

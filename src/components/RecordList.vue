@@ -1,5 +1,5 @@
 <template>
-  <v-data-table :headers="headers" :items="items" :items-per-page="5"></v-data-table>
+  <v-data-table :headers="headers" :items="items" :items-per-page="7"></v-data-table>
 </template>
 
 <script>
@@ -28,7 +28,6 @@ export default {
   },
   mounted () {
     this.$store.dispatch('getWeightsDatas')
-    console.log(this.$store.state.weightsDatas)
   }
 };
 </script>

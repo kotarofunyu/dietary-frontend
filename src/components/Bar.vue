@@ -11,13 +11,14 @@
           labels: [],
           datasets: [
             {
+              lineTention: 0,
               label: "体重",
               data: []
             }
           ]
         },
         options: {
-          responsive: true,
+          // responsive: true,
           scales: {
             xAxes: [{
               scaleLabel: {
@@ -28,8 +29,8 @@
             yAxes: [{
               ticks: {
                 beginAtZero: true,
-                stepSize: 10,
-                min: 60
+                stepSize: 0.5,
+                min: 85
               }
             }]
           }
