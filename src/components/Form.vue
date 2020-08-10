@@ -36,6 +36,7 @@
 </template>
 
 <script>
+  import axios from 'axios';
   export default {
     name: 'Form',
     data () {
@@ -49,9 +50,21 @@
     },
     methods: {
       submit () {
-        this.success = true;
+        // this.success = true;
         if (this.$refs.form.validate()) {
-          this.success = true;
+          axios.post('http://localhost:3000/weights', {
+            date: this.date,
+            weight: parseFloat(this.weight),
+            comment: this.comment
+          })
+          .then(function (response) {
+            console.log(response)
+            this.success = true
+          })
+          .catch(function (error) {
+            console.log(error)
+            this.success = false
+          })
         } else {
           this.success = false
         }

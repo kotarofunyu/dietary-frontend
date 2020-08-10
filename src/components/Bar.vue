@@ -39,7 +39,7 @@
     mounted () {
       axios.get('http://localhost:3000/weights')
       .then(response => {
-        console.log("とれたぜ")
+        console.log("API GET SUCCESS!")
         this.data.labels = response.data.map(item => item.date)
         this.data.datasets[0].data = response.data.map(item => item.weight)
       })
