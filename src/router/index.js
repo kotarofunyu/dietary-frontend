@@ -6,6 +6,7 @@ import EditView from '../views/Edit.vue'
 import CreateView from '../views/CreateView.vue'
 import User from '../views/User.vue'
 import Signin from '../components/Signin.vue'
+import RecordDetailView from '../views/RecordDetailView.vue'
 
 Vue.use(VueRouter)
 
@@ -19,6 +20,11 @@ const routes = [
     path: '/record',
     name: 'Record',
     component: Record
+  },
+  {
+    path: '/record/:id/',
+    name: 'RecordDetail',
+    component: RecordDetailView
   },
   {
     path: '/record/:id/edit',

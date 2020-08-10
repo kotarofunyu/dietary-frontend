@@ -16,6 +16,7 @@
           <v-icon>pageview</v-icon>削除
         </v-btn>
       </template>
+      <router-link to="/record/" + item.id>detail</router-link>
     </v-data-table>
   </v-container>
 </template>
