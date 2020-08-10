@@ -4,9 +4,6 @@ import Home from '../views/Home.vue'
 import Record from '../views/Record.vue'
 import CreateView from '../views/CreateView.vue'
 import User from '../views/User.vue'
-import Page1 from '../components/page1.vue'
-import Page2 from '../components/page2.vue'
-import Page3 from '../components/page3.vue'
 import Signin from '../components/Signin.vue'
 
 Vue.use(VueRouter)
