@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Record from '../views/Record.vue'
+import EditView from '../views/Edit.vue'
 import CreateView from '../views/CreateView.vue'
 import User from '../views/User.vue'
 import Signin from '../components/Signin.vue'
@@ -18,6 +19,11 @@ const routes = [
     path: '/record',
     name: 'Record',
     component: Record
+  },
+  {
+    path: '/record/:id/edit',
+    name: 'edit',
+    component: EditView
   },
   {
     path: '/create',
