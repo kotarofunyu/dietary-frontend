@@ -2,12 +2,12 @@
   <div>
     <div id="test">
       <v-app-bar app clipped-left dark color="#039BE5">
-        <v-app-bar-nav-icon />
+        <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
         <router-link to="/signup" v-if="!signedIn">新規登録</router-link>
         <router-link to="/signin" v-if="!signedIn">ログイン</router-link>
         <a href="/" v-if="signedIn" @click="signOut">Sign out</a>
       </v-app-bar>
-      <v-navigation-drawer app floating dark color="#039BE5" mini-variant fixed clipped>
+      <v-navigation-drawer app floating dark color="#039BE5" mini-variant fixed clipped v-model="drawer">
         <v-list>
           <v-list-item v-for="item in items" :key="item.title" :to="item.link">
             <v-list-item-icon>
@@ -30,6 +30,7 @@ export default {
   name: "Header",
   data() {
     return {
+      drawer: false,
       items: [
         {
           title: "ホーム",
