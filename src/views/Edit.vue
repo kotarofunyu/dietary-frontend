@@ -2,6 +2,7 @@
   <div>
     編集だよ
     <p>{{ $route.params.id }}</p>
+    <p>{{ $route.params.weight }}</p>
     <Form />
   </div>
 </template>

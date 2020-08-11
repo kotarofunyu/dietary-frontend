@@ -1,16 +1,15 @@
 <template>
   <v-container>
-    <v-alert
-      type="success"
-      v-if="this.isDeleteDone"
-    >削除しました</v-alert>
+    <v-alert type="success" v-if="this.isDeleteDone">削除しました</v-alert>
     <v-data-table :headers="headers" :items="items" :items-per-page="7">
       <template v-slot:item.action="{ item }">
-        <v-btn small class="mx-1" :to="'/record/' + item.id">
+        <v-btn small class="mx-1" :to="{ name: 'RecordDetail', params: { id: item.id, weight: item.weight, comment: item.comment, date: item.date } }">
           <v-icon>pageview</v-icon>詳細
         </v-btn>
-        <v-btn small class="mx-1" :to="'/record/' + item.id + '/edit'">
-          <v-icon>pageview</v-icon>編集
+        <v-btn
+          :to="{ name: 'edit', params: { id: item.id, weight: item.weight, date: item.date, comment: item.comment } }"
+        >
+          編集
         </v-btn>
         <v-btn small class="mx-1" @click="deleteData(item.id)">
           <v-icon>pageview</v-icon>削除

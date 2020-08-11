@@ -1,8 +1,14 @@
 <template>
   <div>
-    <p>aaaaa</p>
+    <p>記録の詳細</p>
+    <p>
+      {{ $route.params.date }}
+    </p>
     <p>
       {{ $route.params.weight }}
+    </p>
+    <p>
+      {{ $route.params.id }}
     </p>
   </div>
 </template>
