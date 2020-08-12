@@ -1,9 +1,13 @@
 <template>
   <div>
-    編集だよ
-    <p>{{ $route.params.id }}</p>
-    <p>{{ $route.params.weight }}</p>
-    <Form />
+    編集
+    <Form
+      http-method="put"
+      :comment-data="$route.params.comment"
+      :weight-data="$route.params.weight"
+      :date-data="$route.params.date"
+      :add-params="$route.params.id"
+    />
   </div>
 </template>
 
@@ -14,6 +18,11 @@ export default {
   name: 'Edit',
   components: {
     Form,
+  },
+  data () {
+    return {
+      // comment: $route.params.comment
+    }
   }
 }
 </script>

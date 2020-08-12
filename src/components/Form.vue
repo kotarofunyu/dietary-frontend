@@ -39,23 +39,53 @@
   import axios from 'axios';
   export default {
     name: 'Form',
+    props: {
+      httpMethod: {
+        type: String,
+        default: 'post',
+        required: true
+      },
+      addParams: {
+        type: Number,
+        default: '',
+        required: false
+      },
+      dateData: {
+        type: String,
+        default: '',
+        required: false
+      },
+      weightData: {
+        type: Number,
+        // default: '',
+        reqiured: false
+      },
+      commentData: {
+        type: String,
+        default: '',
+        required: false
+      }
+    },
     data () {
       return {
-        date: "",
-        weight: "",
-        comment: "",
+        date: this.$props.dateData,
+        weight: this.$props.weightData,
+        comment: this.$props.commentData,
         success: false,
         required: value => !!value || "必ず入力してください",
       }
     },
     methods: {
       submit () {
-        // this.success = true;
         if (this.$refs.form.validate()) {
-          axios.post('http://localhost:3000/weights', {
-            date: this.date,
-            weight: parseFloat(this.weight),
-            comment: this.comment
+          axios({
+            method: this.$props.httpMethod,
+            url: 'http://localhost:3000/weights/' + this.$props.addParams,
+            params: {
+              date: this.date,
+              weight: parseFloat(this.weight),
+              comment: this.comment
+            }
           })
           .then(function (response) {
             console.log(response)

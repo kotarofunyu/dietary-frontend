@@ -1,7 +1,7 @@
 <template>
   <div class="create_record">
     記録する
-    <Form />
+    <Form httpMethod="post" />
   </div>
 </template>
 
