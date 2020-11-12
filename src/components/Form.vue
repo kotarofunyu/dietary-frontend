@@ -72,7 +72,10 @@
         weight: this.$props.weightData,
         comment: this.$props.commentData,
         success: false,
-        required: value => !!value || "必ず入力してください",
+        required: function(value) {
+          if (this.success === true) { return }
+          return !!value || "必ず入力してください"
+        }.bind(this)
       }
     },
     methods: {
@@ -88,13 +91,16 @@
             }
           })
           .then(function (response) {
-            console.log(response)
+            console.log(response.statusText)
             this.success = true
-          })
+            this.date = ''
+            this.weight = ''
+            this.comment = ''
+          }.bind(this))
           .catch(function (error) {
             console.log(error)
             this.success = false
-          })
+          }.bind(this))
         } else {
           this.success = false
         }
