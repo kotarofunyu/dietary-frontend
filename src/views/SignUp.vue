@@ -12,6 +12,7 @@
 
 <script>
 import firebase from '@/plugins/firebase'
+import axios from '@/plugins/axios'
 export default {
   name: 'Signup',
   data() {
@@ -24,12 +25,13 @@ export default {
   methods: {
     signUp: function() {
       firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
-        .then(user => {
+        .then(res => {
           alert("Create account!")
-          let newUser = {
-            uid: user.user.uid,
+          const user = {
+            uid: res.user.uid,
             email: this.email
           }
+          axios.post("/users", { user })
         })
         .catch(error => {
           alert(error.message)
