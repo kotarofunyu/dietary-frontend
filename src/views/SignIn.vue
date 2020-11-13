@@ -7,6 +7,7 @@
     <p>登録はまだですか？
       <router-link to="/signin">新規登録する</router-link>
     </p>
+    <p v-if="error">{{ error }}</p>
   </div>
 </template>
 
@@ -20,18 +21,17 @@ export default {
       email: '',
       password: '',
       user: null,
+      error: ''
     }
   },
   methods: {
     signIn: function() {
       firebase.auth().signInWithEmailAndPassword(this.email, this.password)
         .then(res => {
-          console.log("Authenticated!")
-          console.log(res.user)
+          
           this.$router.push("/")
         }, err => {
-          console.log("Login Failed...")
-          console.log(err)
+          this.error = "メールアドレスかパスワードに誤りがあります。"
         });
     }
   }
