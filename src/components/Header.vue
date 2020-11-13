@@ -27,7 +27,7 @@
 <script>
 import { mapState } from "vuex";
 import authCheck from '@/plugins/auth-check'
-
+import firebase from '@/plugins/firebase'
 export default {
   name: "Header",
   data() {
@@ -70,13 +70,14 @@ export default {
         text;
     },
     signOut() {
-      this.$http.secured
-        .delete(`/api/signin`)
-        .then((response) => {
-          delete localStorage.csrf;
-          delete localStorage.signedIn;
+      firebase.auth().signOut()
+        .then(() => {
+          this.$store.commit("setUser", null);
+          // this.$router.push("/login")
         })
-        .catch((error) => this.setError(error, "Cannot sign out"));
+        .catch(error => {
+          console.log(error);
+        })
     },
   },
 };
