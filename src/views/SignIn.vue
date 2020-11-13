@@ -26,8 +26,10 @@ export default {
     signIn: function() {
       firebase.auth().signInWithEmailAndPassword(this.email, this.password)
         .then(res => {
-          console.log(res)
+          console.log("Authenticated!")
+          console.log(res.user)
         }, err => {
+          console.log("Login Failed...")
           console.log(err)
         });
     }
