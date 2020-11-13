@@ -28,6 +28,7 @@ export default {
         .then(res => {
           console.log("Authenticated!")
           console.log(res.user)
+          this.$router.push("/")
         }, err => {
           console.log("Login Failed...")
           console.log(err)
