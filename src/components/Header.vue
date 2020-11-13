@@ -3,9 +3,10 @@
     <div id="test">
       <v-app-bar app clipped-left dark color="#039BE5">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
-        <router-link to="/signup" v-if="!signedIn">新規登録</router-link>
-        <router-link to="/signin" v-if="!signedIn">ログイン</router-link>
-        <a href="/" v-if="signedIn" @click="signOut">Sign out</a>
+        <router-link to="/signup" >新規登録</router-link>
+        <router-link to="/signin" >ログイン</router-link>
+        <a href="/" @click="signOut">Sign out</a>
+        <p>{{user.name}}</p>
       </v-app-bar>
       <v-navigation-drawer app floating dark color="#039BE5" mini-variant fixed clipped v-model="drawer">
         <v-list>
@@ -25,6 +26,7 @@
 
 <script>
 import { mapState } from "vuex";
+import authCheck from '@/plugins/auth-check'
 
 export default {
   name: "Header",
@@ -55,10 +57,12 @@ export default {
       ],
     };
   },
-  computed: mapState(["signedIn"]),
-  mounted: function () {
-    this.$store.dispatch("doFetchSignedIn");
+  computed: {
+    user() {
+      return this.$store.state.currentUser
+    }
   },
+  mounted: authCheck(),
   methods: {
     setError(error, text) {
       this.error =

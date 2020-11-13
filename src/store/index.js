@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-
+import createPersistedState from 'vuex-persistedstate'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -10,8 +10,16 @@ export default new Vuex.Store({
     weightsDatas: [],
     weights: [],
     dates: [],
-    comments: []
+    comments: [],
+    currentUser: null
   },
+  plugins: [
+    createPersistedState({
+      key: 'loggedIn',
+      path: ['currentUser'],
+      storage: window.sessionStorage
+    })
+  ],
   mutations: {
     fetchSignedIn(state) {
       state.signedIn = !!localStorage.signedIn
@@ -21,6 +29,9 @@ export default new Vuex.Store({
       state.weights = weightsDatas.map(item => item.weight)
       state.dates = weightsDatas.map(item => item.date)
       state.comments = weightsDatas.map(item => item.comment)
+    },
+    setUser(state, payload) {
+      state.currentUser = payload
     }
   },
   actions: {
@@ -31,7 +42,7 @@ export default new Vuex.Store({
       axios.get('http://localhost:3000/weights').then(response => {
         commit('setWeightsDatas', response.data)
       })
-    }
+    },
   },
   modules: {}
 })
