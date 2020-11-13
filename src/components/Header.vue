@@ -3,9 +3,10 @@
     <div id="test">
       <v-app-bar app clipped-left dark color="#039BE5">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
-        <router-link to="/signup" v-if="!signedIn">新規登録</router-link>
-        <router-link to="/signin" v-if="!signedIn">ログイン</router-link>
-        <a href="/" v-if="signedIn" @click="signOut">Sign out</a>
+        <router-link to="/signup" >新規登録</router-link>
+        <router-link to="/signin" >ログイン</router-link>
+        <a href="/" @click="signOut">Sign out</a>
+        <p>{{user.name}}</p>
       </v-app-bar>
       <v-navigation-drawer app floating dark color="#039BE5" mini-variant fixed clipped v-model="drawer">
         <v-list>
@@ -25,7 +26,8 @@
 
 <script>
 import { mapState } from "vuex";
-
+import authCheck from '@/plugins/auth-check'
+import firebase from '@/plugins/firebase'
 export default {
   name: "Header",
   data() {
@@ -55,10 +57,12 @@ export default {
       ],
     };
   },
-  computed: mapState(["signedIn"]),
-  mounted: function () {
-    this.$store.dispatch("doFetchSignedIn");
+  computed: {
+    user() {
+      return this.$store.state.currentUser
+    }
   },
+  mounted: authCheck(),
   methods: {
     setError(error, text) {
       this.error =
@@ -66,13 +70,14 @@ export default {
         text;
     },
     signOut() {
-      this.$http.secured
-        .delete(`/api/signin`)
-        .then((response) => {
-          delete localStorage.csrf;
-          delete localStorage.signedIn;
+      firebase.auth().signOut()
+        .then(() => {
+          this.$store.commit("setUser", null);
+          // this.$router.push("/login")
         })
-        .catch((error) => this.setError(error, "Cannot sign out"));
+        .catch(error => {
+          console.log(error);
+        })
     },
   },
 };

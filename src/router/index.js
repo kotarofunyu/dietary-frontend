@@ -5,8 +5,9 @@ import Record from '../views/Record.vue'
 import EditView from '../views/Edit.vue'
 import CreateView from '../views/CreateView.vue'
 import User from '../views/User.vue'
-import Signin from '../components/Signin.vue'
 import RecordDetailView from '../views/RecordDetailView.vue'
+import Signup from '../views/SignUp.vue'
+import Signin from '../views/SignIn.vue'
 
 Vue.use(VueRouter)
 
@@ -45,6 +46,11 @@ const routes = [
     path: '/signin',
     name: 'Singin',
     component: Signin
+  },
+  {
+    path: '/signup',
+    name: 'Signup',
+    component: Signup
   }
 ]
 
