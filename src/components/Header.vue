@@ -3,10 +3,14 @@
     <div id="test">
       <v-app-bar app clipped-left dark color="#039BE5">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
-        <router-link to="/signup" >新規登録</router-link>
-        <router-link to="/signin" >ログイン</router-link>
-        <a href="/" @click="signOut">Sign out</a>
-        <p>{{user.name}}</p>
+        <template v-if="user">
+          <p v-if="user">{{user.name}}</p>
+          <a href="/" @click="signOut" v-if="user">ログアウト</a>
+        </template>
+        <template v-else>
+          <router-link to="/signin">ログイン</router-link>
+          <router-link to="/signup">新規登録</router-link>
+        </template>
       </v-app-bar>
       <v-navigation-drawer app floating dark color="#039BE5" mini-variant fixed clipped v-model="drawer">
         <v-list>

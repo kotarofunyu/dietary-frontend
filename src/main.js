@@ -12,10 +12,6 @@ import {
 import vuetify from './plugins/vuetify'
 
 Vue.config.productionTip = false
-Vue.use(axios, {
-  secured: securedAxiosInstance,
-  plain: plainAxiosInstance
-})
 
 new Vue({
   router,

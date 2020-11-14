@@ -47,7 +47,7 @@
       },
       addParams: {
         type: Number,
-        default: '',
+        default: null,
         required: false
       },
       dateData: {
@@ -57,7 +57,7 @@
       },
       weightData: {
         type: Number,
-        // default: '',
+        default: null,
         reqiured: false
       },
       commentData: {
