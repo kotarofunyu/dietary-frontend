@@ -3,11 +3,7 @@ import App from './App.vue'
 import router from './router/index.js'
 import store from './store'
 import axios from 'axios'
-
-import {
-  securedAxiosInstance,
-  plainAxiosInstance
-} from '../javascript/axios/axios.js'
+import checkLoggedIn from './plugins/check-logged-in'
 
 import vuetify from './plugins/vuetify'
 
@@ -17,5 +13,6 @@ new Vue({
   router,
   store,
   vuetify,
+  checkLoggedIn,
   render: h => h(App)
 }).$mount('#app')

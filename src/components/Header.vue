@@ -5,7 +5,7 @@
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
         <template v-if="user">
           <p v-if="user">{{user.name}}</p>
-          <a href="/" @click="signOut" v-if="user">ログアウト</a>
+          <a href="/signin" @click="signOut" v-if="user">ログアウト</a>
         </template>
         <template v-else>
           <router-link to="/signin">ログイン</router-link>
@@ -77,7 +77,6 @@ export default {
       firebase.auth().signOut()
         .then(() => {
           this.$store.commit("setUser", null);
-          // this.$router.push("/login")
         })
         .catch(error => {
           console.log(error);

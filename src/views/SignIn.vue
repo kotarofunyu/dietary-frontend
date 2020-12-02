@@ -24,11 +24,16 @@ export default {
       error: ''
     }
   },
+  mounted: function() {
+    // ログイン済みであればトップへ遷移する
+    if (this.$store.state.currentUser) {
+      this.$router.push("/")
+    }
+  },
   methods: {
     signIn: function() {
       firebase.auth().signInWithEmailAndPassword(this.email, this.password)
         .then(res => {
-          
           this.$router.push("/")
         }, err => {
           this.error = "メールアドレスかパスワードに誤りがあります。"
