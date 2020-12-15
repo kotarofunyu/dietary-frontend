@@ -71,7 +71,6 @@ export default {
         axios
           .delete("http://localhost:3000/weights/" + id, { data: { id: id } })
           .then((response) => {
-            console.log(response.data);
             this.deleteItemFromItems(this.items, id)
             this.isDeleteDone = true;
           })
@@ -84,7 +83,6 @@ export default {
       array.forEach((item, index) => {
         if (item.id === id) {
           array.splice(index, 1)
-          console.log(array)
         }
       })
     }
