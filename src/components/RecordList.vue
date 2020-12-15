@@ -1,6 +1,17 @@
 <template>
   <v-container>
-    <v-alert type="success" v-if="this.isDeleteDone">削除しました</v-alert>
+    <v-alert
+    type="success"
+    v-if="this.isDeleteDone"
+    close-text="Close Alert"
+    dismissible
+    >削除しました</v-alert>
+    <v-alert
+    type="error"
+    v-if="this.isError"
+    close-text="Close Alert"
+    dismissible
+    >失敗しました</v-alert>
     <v-data-table :headers="headers" :items="items" :items-per-page="7">
       <template v-slot:item.action="{ item }">
         <v-btn small class="mx-1" :to="{ name: 'RecordDetail', params: { id: item.id, weight: item.weight, comment: item.comment, date: item.date } }">
@@ -28,6 +39,7 @@ export default {
   data() {
     return {
       isDeleteDone: false,
+      isError: false,
       headers: [
         {
           text: "Date",
@@ -60,10 +72,22 @@ export default {
           .delete("http://localhost:3000/weights/" + id, { data: { id: id } })
           .then((response) => {
             console.log(response.data);
+            this.deleteItemFromItems(this.items, id)
             this.isDeleteDone = true;
-          });
+          })
+          .catch((errors) => {
+            this.isError = true;
+          })
       }
     },
+    deleteItemFromItems(array, id) {
+      array.forEach((item, index) => {
+        if (item.id === id) {
+          array.splice(index, 1)
+          console.log(array)
+        }
+      })
+    }
   },
 };
 </script>

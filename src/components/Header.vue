@@ -2,17 +2,27 @@
   <div>
     <div id="test">
       <v-app-bar app clipped-left dark color="#039BE5">
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
+        <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
         <template v-if="user">
-          <p v-if="user">{{user.name}}</p>
+          <p v-if="user">{{ user.name }}</p>
           <a href="/signin" @click="signOut" v-if="user">ログアウト</a>
         </template>
         <template v-else>
           <router-link to="/signin">ログイン</router-link>
           <router-link to="/signup">新規登録</router-link>
         </template>
+        <LoginModal />
       </v-app-bar>
-      <v-navigation-drawer app floating dark color="#039BE5" mini-variant fixed clipped v-model="drawer">
+      <v-navigation-drawer
+        app
+        floating
+        dark
+        color="#039BE5"
+        mini-variant
+        fixed
+        clipped
+        v-model="drawer"
+      >
         <v-list>
           <v-list-item v-for="item in items" :key="item.title" :to="item.link">
             <v-list-item-icon>
@@ -29,11 +39,15 @@
 </template>
 
 <script>
+import LoginModal from "@/components/Login"
 import { mapState } from "vuex";
-import authCheck from '@/plugins/auth-check'
-import firebase from '@/plugins/firebase'
+import authCheck from "@/plugins/auth-check";
+import firebase from "@/plugins/firebase";
 export default {
   name: "Header",
+  components: {
+    LoginModal
+  },
   data() {
     return {
       drawer: false,
@@ -63,8 +77,8 @@ export default {
   },
   computed: {
     user() {
-      return this.$store.state.currentUser
-    }
+      return this.$store.state.currentUser;
+    },
   },
   mounted: authCheck(),
   methods: {
@@ -74,13 +88,15 @@ export default {
         text;
     },
     signOut() {
-      firebase.auth().signOut()
+      firebase
+        .auth()
+        .signOut()
         .then(() => {
           this.$store.commit("setUser", null);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
-        })
+        });
     },
   },
 };

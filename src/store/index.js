@@ -29,6 +29,7 @@ export default new Vuex.Store({
       state.weights = weightsDatas.map(item => item.weight)
       state.dates = weightsDatas.map(item => item.date)
       state.comments = weightsDatas.map(item => item.comment)
+      console.log(weightsDatas)
     },
     setUser(state, payload) {
       state.currentUser = payload
@@ -42,7 +43,7 @@ export default new Vuex.Store({
       axios.get('http://localhost:3000/weights').then(response => {
         commit('setWeightsDatas', response.data)
       })
-    },
+    }
   },
   modules: {}
 })

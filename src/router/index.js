@@ -56,16 +56,16 @@ const routes = [
 ]
 
 const router = new VueRouter({
+  mode: 'history',
   routes
 })
 
-router.beforeEach((to, from, next) => {
-  if (store.state.currentUser) {
-    next()
-  } else {
-    return page.path === '/signin'
-  }
-})
+// router.beforeEach((to, from, next) => {
+//   if (store.state.currentUser) {
+//     next()
+//   } else {
+//     return page.path === '/signin'
+//   }
+// })
 
 export default router
-  
