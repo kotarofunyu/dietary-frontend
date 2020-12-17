@@ -1,6 +1,5 @@
 <template>
   <div class="record">
-    体重記録だよ
     <v-container>
       <v-row>
         <LineChart :width="800" :height="500" />
@@ -9,18 +8,23 @@
         <RecordList />
       </v-row>
     </v-container>
+    <v-container>
+      <Monthly />
+    </v-container>
   </div>
 </template>
 
 <script>
 import LineChart from '../components/Bar'
 import RecordList from '../components/RecordList'
+import Monthly from '../components/Monthly'
 
 export default {
   name: 'Home',
   components: {
     LineChart,
-    RecordList
+    RecordList,
+    Monthly
   }
 }
 </script>
