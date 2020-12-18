@@ -3,14 +3,6 @@
     <div id="test">
       <v-app-bar app clipped-left dark color="#039BE5">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-        <template v-if="user">
-          <p v-if="user">{{ user.name }}</p>
-        </template>
-        <template v-else>
-          <router-link to="/signin">ログイン</router-link>
-          <router-link to="/signup">新規登録</router-link>
-        </template>
-        <LoginModal />
       </v-app-bar>
       <v-navigation-drawer
         v-model="drawer"
@@ -40,6 +32,7 @@
               <v-list-item-title>{{ item.title }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+          <LoginModal />
         </v-list>
       </v-navigation-drawer>
     </div>
@@ -58,7 +51,7 @@ export default {
   },
   data() {
     return {
-      drawer: false,
+      drawer: true,
       items: [
         {
           title: "ホーム",
@@ -74,11 +67,6 @@ export default {
           title: "記録する",
           icon: "mdi-lead-pencil",
           link: "/create",
-        },
-        {
-          title: "ユーザー",
-          icon: "mdi-account",
-          link: "/user",
         },
       ],
     };
