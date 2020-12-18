@@ -8,15 +8,6 @@
             <v-icon>mdi-chevron-left</v-icon>
           </v-btn>
           <v-select
-            v-model="type"
-            :items="types"
-            dense
-            outlined
-            hide-details
-            class="ma-2"
-            label="type"
-          ></v-select>
-          <v-select
             v-model="weekday"
             :items="weekdays"
             dense
@@ -58,10 +49,9 @@ export default {
       types: ["month", "week", "day", "4day"],
       weekday: [0, 1, 2, 3, 4, 5, 6],
       weekdays: [
-        { text: "Sun - Sat", value: [0, 1, 2, 3, 4, 5, 6] },
-        { text: "Mon - Sun", value: [1, 2, 3, 4, 5, 6, 0] },
-        { text: "Mon - Fri", value: [1, 2, 3, 4, 5] },
-        { text: "Mon, Wed, Fri", value: [1, 3, 5] },
+        { text: "日曜 - 土曜", value: [0, 1, 2, 3, 4, 5, 6] },
+        { text: "月曜 - 日曜", value: [1, 2, 3, 4, 5, 6, 0] },
+        { text: "月曜 - 金曜", value: [1, 2, 3, 4, 5] },
       ],
       value: "",
       events: [],
