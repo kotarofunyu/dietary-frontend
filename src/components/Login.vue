@@ -2,8 +2,8 @@
   <v-row justify="center">
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary" dark v-bind="attrs" v-on="on" v-if="user"> ログアウト </v-btn>
-        <v-btn color="primary" dark v-bind="attrs" v-on="on" v-else> ログイン </v-btn>
+        <v-btn color="primary" dark v-bind="attrs" @click="signOut" v-if="user">ログアウト</v-btn>
+        <v-btn color="primary" dark v-bind="attrs" v-on="on" v-else>ログイン</v-btn>
       </template>
       <v-card>
         <v-card-title>
@@ -62,6 +62,15 @@ export default {
         this.$router.push('/')
       }, err => {
         this.error = "ログインに失敗しました  "
+      })
+    },
+    signOut: function() {
+      firebase.auth().signOut()
+      .then(res => {
+        this.$store.commit("setUser", null)
+      })
+      .catch((error) => {
+        this.error = "ログアウトに失敗しました"
       })
     }
   }

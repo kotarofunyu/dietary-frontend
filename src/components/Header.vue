@@ -5,7 +5,6 @@
         <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
         <template v-if="user">
           <p v-if="user">{{ user.name }}</p>
-          <a href="/signin" @click="signOut" v-if="user">ログアウト</a>
         </template>
         <template v-else>
           <router-link to="/signin">ログイン</router-link>
