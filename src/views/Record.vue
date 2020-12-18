@@ -2,10 +2,10 @@
   <div class="record">
     <v-container>
       <v-row>
-        <LineChart :width="800" :height="500" />
+        <RecordList />
       </v-row>
       <v-row>
-        <RecordList />
+        <LineChart :width="800" :height="500" />
       </v-row>
     </v-container>
     <v-container>
