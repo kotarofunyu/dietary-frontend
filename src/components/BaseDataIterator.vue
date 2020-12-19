@@ -243,7 +243,7 @@ export default {
       .then((response) => {
         this.monthly = response.data
       })
-      .catcj((error) => {
+      .catch((error) => {
         this.monthly = []
       })
     },
