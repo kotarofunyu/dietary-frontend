@@ -1,6 +1,5 @@
 <template lang="">
   <div>
-    <p>{{ selectedMonth }}</p>
     <v-data-iterator
         :items="weekly"
         :items-per-page.sync="itemsPerPage"
@@ -75,7 +74,7 @@
             >
               <v-card>
                 <v-card-title class="subheading font-weight-bold">
-                  {{ index+1 }}
+                  第{{ index+1 }}週
                 </v-card-title>
 
                 <v-divider></v-divider>
@@ -195,8 +194,6 @@ export default {
       const weekly = [[], [], [], [], []]
       if (!this.monthly) { return weekly }
       const weightsData = this.monthly
-      console.log(weightsData)
-      console.log(this.monthsArray)
       const amount = weightsData.length
       let i = 0
       weightsData.forEach((element) => {
@@ -228,7 +225,6 @@ export default {
         }
         i += 1
       })
-      console.log(weekly)
       return weekly
     },
   },
