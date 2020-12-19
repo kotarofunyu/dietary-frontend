@@ -1,6 +1,6 @@
 <template lang="">
   <div>
-    <p>{{ weightsData }}</p>
+    <p @click="weekly()">aaa</p>
     <v-data-iterator
         :items="items"
         :items-per-page.sync="itemsPerPage"
@@ -91,6 +91,7 @@
                       class="align-end"
                       :class="{ 'blue--text': sortBy === key }"
                     >
+                    aaa
                       {{ item[key.toLowerCase()] }}
                     </v-list-item-content>
                   </v-list-item>
@@ -194,7 +195,7 @@ export default {
       ],
       items: [
         {
-          name: "Frozen Yogurt",
+          name: "第一週 89.4kg",
           calories: 159,
           fat: 6.0,
           carbs: 24,
@@ -315,7 +316,41 @@ export default {
       this.itemsPerPage = number;
     },
     weekly() {
-
+      const weekly = [[], [], [], [], []]
+      const weightsData = this.$options.propsData.weightsData
+      console.log(weightsData)
+      const amount = weightsData.length
+      let i = 0
+      weightsData.forEach((element) => {
+        if (i <= 6) {
+          weekly[0].push({
+            date: element.date,
+            weight: element.weight
+          })
+        }else if (i <= 13) {
+          weekly[1].push({
+            date: element.date,
+            weight: element.weight
+          })
+        }else if (i <= 20) {
+          weekly[2].push({
+            date: element.date,
+            weight: element.weight
+          })
+        }else if (i <= 27) {
+          weekly[3].push({
+            date: element.date,
+            weight: element.weight
+          })
+        }else if (i <= 31) {
+          weekly[4].push({
+            date: element.date,
+            weight: element.weight
+          })
+        }
+        i += 1
+      })
+      console.log(weekly)
     },
     weekAverage() {
       
