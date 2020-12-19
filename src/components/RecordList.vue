@@ -1,10 +1,5 @@
 <template>
   <div>
-    <v-tabs>
-      <v-tab v-for="item in tabItems" :key="item">
-        {{ item }}
-      </v-tab>
-    </v-tabs>
     <v-container>
       <v-alert
         type="success"
