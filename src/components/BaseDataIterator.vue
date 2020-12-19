@@ -75,6 +75,7 @@
               <v-card>
                 <v-card-title class="subheading font-weight-bold">
                   第{{ index+1 }}週
+                  平均体重: {{ averages[index] }}
                 </v-card-title>
 
                 <v-divider></v-divider>
@@ -182,7 +183,8 @@ export default {
       sortBy: "name",
       monthsArray: Array(12).fill(null).map((_, i) => i + 1).map(x => `${x}月`),
       selectedMonth: null,
-      monthly: null
+      monthly: null,
+      averages: []
     };
   },
   computed: {
@@ -196,6 +198,7 @@ export default {
       const amount = weightsData.length
       let i = 0
       weightsData.forEach((element) => {
+        if (i > amount ) { return }
         if (i <= 6) {
           weekly[0].push({
             date: element.date,
@@ -224,6 +227,15 @@ export default {
         }
         i += 1
       })
+      this.averages = []
+      weekly.forEach((arr) => {
+        let weekWeights = arr.map(x => x.weight)
+        let sum = weekWeights.reduce((sum, element) => sum + element, 0)
+        let av = sum / weekWeights.length
+        this.averages.push(Math.round(av * Math.pow(10, 2)) / Math.pow(10, 2))
+      })
+      console.log(this.averages)
+      console.log(weekly)
       return weekly
     },
   },
