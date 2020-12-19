@@ -7,7 +7,6 @@
       <v-navigation-drawer
         v-model="drawer"
         color="#039BE5"
-        :expand-on-hover="expandOnHover"
         :mini-variant="miniVariant"
         :permanent="permanent"
         dark
