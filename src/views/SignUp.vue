@@ -6,7 +6,7 @@
     <input type="password" placeholder="Password" v-model="password">
     <button @click="signUp">Register</button>
     <p>Do you have an account?
-      <router-link to="/signin">sign in now!!</router-link>
+      <router-link to="/signin">sign in now!!~~</router-link>
     </p>
   </div>
 </template>
@@ -22,6 +22,11 @@ export default {
       email: '',
       password: '',
       user: null,
+    }
+  },
+  created: function() {
+    if (this.$store.state.currentUser) {
+      this.$router.push("/")
     }
   },
   methods: {
@@ -40,9 +45,6 @@ export default {
           alert(error.message)
         })
     }
-  },
-  created: function() {
-    console.log(process.env.VUE_APP_API_KEY)
   }
 }
 </script>

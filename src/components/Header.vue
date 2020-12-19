@@ -2,18 +2,27 @@
   <div>
     <div id="test">
       <v-app-bar app clipped-left dark color="#039BE5">
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
-        <template v-if="user">
-          <p v-if="user">{{user.name}}</p>
-          <a href="/" @click="signOut" v-if="user">ログアウト</a>
-        </template>
-        <template v-else>
-          <router-link to="/signin">ログイン</router-link>
-          <router-link to="/signup">新規登録</router-link>
-        </template>
+        <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       </v-app-bar>
-      <v-navigation-drawer app floating dark color="#039BE5" mini-variant fixed clipped v-model="drawer">
+      <v-navigation-drawer
+        v-model="drawer"
+        color="#039BE5"
+        :mini-variant="miniVariant"
+        :permanent="permanent"
+        dark
+        app
+      >
         <v-list>
+          <v-list-item two-line :class="miniVariant && 'px-0'">
+            <v-list-item-avatar>
+              <img src="https://randomuser.me/api/portraits/men/81.jpg">
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <v-list-item-title>User</v-list-item-title>
+              <v-list-item-subtitle>kotaro</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-divider></v-divider>
           <v-list-item v-for="item in items" :key="item.title" :to="item.link">
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
@@ -22,6 +31,7 @@
               <v-list-item-title>{{ item.title }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+          <LoginModal />
         </v-list>
       </v-navigation-drawer>
     </div>
@@ -29,14 +39,18 @@
 </template>
 
 <script>
+import LoginModal from "@/components/Login"
 import { mapState } from "vuex";
-import authCheck from '@/plugins/auth-check'
-import firebase from '@/plugins/firebase'
+import authCheck from "@/plugins/auth-check";
+import firebase from "@/plugins/firebase";
 export default {
   name: "Header",
+  components: {
+    LoginModal
+  },
   data() {
     return {
-      drawer: false,
+      drawer: true,
       items: [
         {
           title: "ホーム",
@@ -53,18 +67,13 @@ export default {
           icon: "mdi-lead-pencil",
           link: "/create",
         },
-        {
-          title: "ユーザー",
-          icon: "mdi-account",
-          link: "/user",
-        },
       ],
     };
   },
   computed: {
     user() {
-      return this.$store.state.currentUser
-    }
+      return this.$store.state.currentUser;
+    },
   },
   mounted: authCheck(),
   methods: {
@@ -74,14 +83,15 @@ export default {
         text;
     },
     signOut() {
-      firebase.auth().signOut()
+      firebase
+        .auth()
+        .signOut()
         .then(() => {
           this.$store.commit("setUser", null);
-          // this.$router.push("/login")
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
-        })
+        });
     },
   },
 };

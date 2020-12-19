@@ -1,26 +1,34 @@
 <template>
   <div class="record">
-    体重記録だよ
     <v-container>
-      <v-row>
-        <LineChart :width="800" :height="500" />
-      </v-row>
-      <v-row>
-        <RecordList />
-      </v-row>
+      <v-tabs>
+        <v-tab v-for="item in tabItems" :key="item">
+          {{ item }}
+        </v-tab>
+        <v-tab-item> <RecordAll /> </v-tab-item>
+        <v-tab-item> <RecordMonthly /> </v-tab-item>
+        <v-tab-item> <RecordAnalytics /> </v-tab-item>
+      </v-tabs>
     </v-container>
   </div>
 </template>
 
 <script>
-import LineChart from '../components/Bar'
-import RecordList from '../components/RecordList'
+import RecordAll from "../components/RecordAll";
+import RecordMonthly from "../components/RecordMonthly";
+import RecordAnalytics from '../components/RecordAnalytics';
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
-    LineChart,
-    RecordList
-  }
-}
+    RecordAll,
+    RecordMonthly,
+    RecordAnalytics
+  },
+  data() {
+    return {
+      tabItems: ["全記録", "月別", "数値分析"],
+    };
+  },
+};
 </script>

@@ -9,7 +9,7 @@
           :rules="[required]"
         ></v-date-picker>
           <v-text-field
-            v-model="weight"
+            v-model.number="weight"
             label="入力必須で文字数制限のあるテキストフィールド"
             placeholder="体重の数値"
             type="number"
@@ -25,6 +25,10 @@
             counter
           >
           </v-textarea>
+          <p>
+            {{ this.weight }}
+          </p>
+          <p v-show="notNumber">数値ではありません</p>
         <v-divider></v-divider>
         <v-card-actions>
           <v-btn test v-on:click="submit">送信する</v-btn>
@@ -47,7 +51,7 @@
       },
       addParams: {
         type: Number,
-        default: null,
+        default: "",
         required: false
       },
       dateData: {
@@ -94,8 +98,9 @@
             console.log(response.statusText)
             this.success = true
             this.date = ''
-            this.weight = ''
+            this.weight = null
             this.comment = ''
+            this.$router.push('/record')
           }.bind(this))
           .catch(function (error) {
             console.log(error)
@@ -104,6 +109,14 @@
         } else {
           this.success = false
         }
+      }
+    },
+    computed: {
+      notNumber() {
+        const value = Number(this.weight);
+        console.log(value);
+        console.log(this.weight);
+        return Number.isNaN(value);
       }
     }
   }

@@ -42,7 +42,7 @@ export default new Vuex.Store({
       axios.get('http://localhost:3000/weights').then(response => {
         commit('setWeightsDatas', response.data)
       })
-    },
+    }
   },
   modules: {}
 })

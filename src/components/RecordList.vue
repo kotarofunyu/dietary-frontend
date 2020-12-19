@@ -1,23 +1,58 @@
 <template>
-  <v-container>
-    <v-alert type="success" v-if="this.isDeleteDone">削除しました</v-alert>
-    <v-data-table :headers="headers" :items="items" :items-per-page="7">
-      <template v-slot:item.action="{ item }">
-        <v-btn small class="mx-1" :to="{ name: 'RecordDetail', params: { id: item.id, weight: item.weight, comment: item.comment, date: item.date } }">
-          <v-icon>pageview</v-icon>詳細
-        </v-btn>
-        <v-btn
-          :to="{ name: 'edit', params: { id: item.id, weight: item.weight, date: item.date, comment: item.comment } }"
-        >
-          編集
-        </v-btn>
-        <v-btn small class="mx-1" @click="deleteData(item.id)">
-          <v-icon>pageview</v-icon>削除
-        </v-btn>
-      </template>
-      <router-link to="/record/" + item.id>detail</router-link>
-    </v-data-table>
-  </v-container>
+  <div>
+    <v-container>
+      <v-alert
+        type="success"
+        v-if="this.isDeleteDone"
+        close-text="Close Alert"
+        dismissible
+        >削除しました</v-alert
+      >
+      <v-alert
+        type="error"
+        v-if="this.isError"
+        close-text="Close Alert"
+        dismissible
+        >失敗しました</v-alert
+      >
+      <v-data-table :headers="headers" :items="items" :items-per-page="7">
+        <template v-slot:item.action="{ item }">
+          <v-btn
+            small
+            class="mx-1"
+            :to="{
+              name: 'RecordDetail',
+              params: {
+                id: item.id,
+                weight: item.weight,
+                comment: item.comment,
+                date: item.date,
+              },
+            }"
+          >
+            <v-icon>pageview</v-icon>詳細
+          </v-btn>
+          <v-btn
+            :to="{
+              name: 'edit',
+              params: {
+                id: item.id,
+                weight: item.weight,
+                date: item.date,
+                comment: item.comment,
+              },
+            }"
+          >
+            編集
+          </v-btn>
+          <v-btn small class="mx-1" @click="deleteData(item.id)">
+            <v-icon>pageview</v-icon>削除
+          </v-btn>
+        </template>
+        <router-link to="/record/" + item.id>detail</router-link>
+      </v-data-table>
+    </v-container>
+  </div>
 </template>
 
 <script>
@@ -28,6 +63,8 @@ export default {
   data() {
     return {
       isDeleteDone: false,
+      isError: false,
+      tabItems: ['全記録', '月別', '数値分析'],
       headers: [
         {
           text: "Date",
@@ -59,10 +96,20 @@ export default {
         axios
           .delete("http://localhost:3000/weights/" + id, { data: { id: id } })
           .then((response) => {
-            console.log(response.data);
+            this.deleteItemFromItems(this.items, id);
             this.isDeleteDone = true;
+          })
+          .catch((errors) => {
+            this.isError = true;
           });
       }
+    },
+    deleteItemFromItems(array, id) {
+      array.forEach((item, index) => {
+        if (item.id === id) {
+          array.splice(index, 1);
+        }
+      });
     },
   },
 };

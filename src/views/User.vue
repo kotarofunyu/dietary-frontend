@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import checkLoggedIn from '@/plugins/check-logged-in'
+// import checkLoggedIn from '@/plugins/check-logged-in'
 export default {
   name: 'User',
   computed: {
@@ -14,6 +14,9 @@ export default {
       return this.$store.state.currentUser
     }
   },
-  mounted: checkLoggedIn()
+  mounted: function() {
+    console.log(this.$store.state)
+  }
+  // mounted: this.checkLoggedIn()
 }
 </script>
