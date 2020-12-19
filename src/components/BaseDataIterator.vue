@@ -1,5 +1,10 @@
 <template lang="">
   <div>
+     <div
+        v-for="item in weekly"
+        >
+          {{ item }}
+        </div>
     <p @click="weekly()">aaa</p>
     <v-data-iterator
         :items="items"
@@ -65,8 +70,8 @@
         <template v-slot:default="props">
           <v-row>
             <v-col
-              v-for="item in props.items"
-              :key="item.name"
+              v-for="(value, index) in weekly"
+              :key="item"
               cols="12"
               sm="6"
               md="4"
@@ -74,25 +79,21 @@
             >
               <v-card>
                 <v-card-title class="subheading font-weight-bold">
-                  {{ item.name }}
+                  {{ index+1 }}
                 </v-card-title>
 
                 <v-divider></v-divider>
 
                 <v-list dense>
                   <v-list-item
-                    v-for="(key, index) in filteredKeys"
-                    :key="index"
+                    v-for="item in value"
+                    :key="item.date"
                   >
-                    <v-list-item-content :class="{ 'blue--text': sortBy === key }">
-                      {{ key }}:
+                    <v-list-item-content>
+                     {{ item.date }}
                     </v-list-item-content>
-                    <v-list-item-content
-                      class="align-end"
-                      :class="{ 'blue--text': sortBy === key }"
-                    >
-                    aaa
-                      {{ item[key.toLowerCase()] }}
+                    <v-list-item-content>
+                      {{ item.weight }}
                     </v-list-item-content>
                   </v-list-item>
                 </v-list>
@@ -295,6 +296,8 @@ export default {
           iron: "6%",
         },
       ],
+      weekKeys: [1, 2, 3, 4, 5],
+      // weekly: []
     };
   },
   computed: {
@@ -303,17 +306,6 @@ export default {
     },
     filteredKeys() {
       return this.keys.filter((key) => key !== "Name");
-    },
-  },
-  methods: {
-    nextPage() {
-      if (this.page + 1 <= this.numberOfPages) this.page += 1;
-    },
-    formerPage() {
-      if (this.page - 1 >= 1) this.page -= 1;
-    },
-    updateItemsPerPage(number) {
-      this.itemsPerPage = number;
     },
     weekly() {
       const weekly = [[], [], [], [], []]
@@ -351,6 +343,18 @@ export default {
         i += 1
       })
       console.log(weekly)
+      return weekly
+    },
+  },
+  methods: {
+    nextPage() {
+      if (this.page + 1 <= this.numberOfPages) this.page += 1;
+    },
+    formerPage() {
+      if (this.page - 1 >= 1) this.page -= 1;
+    },
+    updateItemsPerPage(number) {
+      this.itemsPerPage = number;
     },
     weekAverage() {
       
