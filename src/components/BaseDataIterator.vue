@@ -1,5 +1,6 @@
 <template lang="">
   <div>
+    <p>{{ selectedMonth }}</p>
     <v-data-iterator
         :items="weekly"
         :items-per-page.sync="itemsPerPage"
@@ -27,13 +28,14 @@
             <template v-if="$vuetify.breakpoint.mdAndUp">
               <v-spacer></v-spacer>
               <v-select
-                v-model="sortBy"
+                v-model="selectedMonth"
                 flat
                 solo-inverted
                 hide-details
-                :items="weekKeys"
+                :items="monthsArray"
                 prepend-inner-icon="mdi-magnify"
-                label="Sort by"
+                label="月を選択"
+                @change="getMonthly"
               ></v-select>
               <v-spacer></v-spacer>
               <v-btn-toggle
@@ -84,7 +86,7 @@
                     :key="item.date"
                   >
                     <v-list-item-content>
-                     {{ item.date }}
+                      {{ item.date }}
                     </v-list-item-content>
                     <v-list-item-content>
                       {{ item.weight }}
@@ -160,6 +162,7 @@
   </div>
 </template>
 <script>
+import axios from 'axios'
 export default {
   name: "BaseDataIterator",
   props: {
@@ -178,30 +181,22 @@ export default {
       page: 1,
       itemsPerPage: 4,
       sortBy: "name",
-      keys: [
-        "Name",
-        "Calories",
-        "Fat",
-        "Carbs",
-        "Protein",
-        "Sodium",
-        "Calcium",
-        "Iron",
-      ],
       weekKeys: [1, 2, 3, 4, 5],
+      monthsArray: Array(12).fill(null).map((_, i) => i + 1),
+      selectedMonth: null,
+      monthly: null
     };
   },
   computed: {
     numberOfPages() {
       return Math.ceil(this.weekly.length / this.itemsPerPage);
     },
-    filteredKeys() {
-      return this.keys.filter((key) => key !== "Name");
-    },
     weekly() {
       const weekly = [[], [], [], [], []]
-      const weightsData = this.$options.propsData.weightsData
+      if (!this.monthly) { return weekly }
+      const weightsData = this.monthly
       console.log(weightsData)
+      console.log(this.monthsArray)
       const amount = weightsData.length
       let i = 0
       weightsData.forEach((element) => {
@@ -247,9 +242,15 @@ export default {
     updateItemsPerPage(number) {
       this.itemsPerPage = number;
     },
-    weekAverage() {
-      
-    }
+    getMonthly() {
+      axios.get(`http://localhost:3000/monthly?month=${this.selectedMonth}`)
+      .then((response) => {
+        this.monthly = response.data
+      })
+      .catcj((error) => {
+        this.monthly = []
+      })
+    },
   },
 };
 </script>
