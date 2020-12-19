@@ -36,6 +36,13 @@
 <script>
 export default {
   name: "BaseCalendar",
+  props: {
+    weightsData: {
+      type: Array,
+      default: null,
+      required: true
+    }
+  },
   data() {
     return {
       type: "month",
@@ -46,14 +53,14 @@ export default {
         { text: "月曜 - 日曜", value: [1, 2, 3, 4, 5, 6, 0] },
         { text: "月曜 - 金曜", value: [1, 2, 3, 4, 5] },
       ],
-      weightsData: this.$store.state.weightsDatas,
       events: [],
       value: "",
     }
   },
   mounted: function() {
     const events = []
-    this.weightsData.forEach((element) => {
+    console.log(this)
+    this.$options.propsData.weightsData.forEach((element) => {
       events.push({
         name: String(element.weight),
         start: new Date(element.date),

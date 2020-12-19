@@ -1,7 +1,7 @@
 <template lang="">
   <div>
-    <BaseCalendar />
-    <BaseDataIterator />
+    <BaseCalendar :weights-data="weightsData" />
+    <BaseDataIterator :weights-data="weightsData" />
   </div>
 </template>
 <script>
@@ -12,6 +12,14 @@ export default {
   components: {
     BaseCalendar,
     BaseDataIterator
+  },
+  data() {
+    return {
+      weightsData: this.$store.state.weightsDatas,
+    }
+  },
+  mounted: function() {
+    this.$store.dispatch("getWeightsDatas");
   }
 };
 </script>

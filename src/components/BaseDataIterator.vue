@@ -1,5 +1,6 @@
 <template lang="">
   <div>
+    <p>{{ weightsData }}</p>
     <v-data-iterator
         :items="items"
         :items-per-page.sync="itemsPerPage"
@@ -165,6 +166,13 @@
 <script>
 export default {
   name: "BaseDataIterator",
+  props: {
+    weightsData: {
+      type: Array,
+      default: null,
+      required: true
+    }
+  },
   data() {
     return {
       itemsPerPageArray: [4, 8, 12],
@@ -306,6 +314,12 @@ export default {
     updateItemsPerPage(number) {
       this.itemsPerPage = number;
     },
+    weekly() {
+
+    },
+    weekAverage() {
+      
+    }
   },
 };
 </script>
