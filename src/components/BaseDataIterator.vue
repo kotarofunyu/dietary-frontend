@@ -180,8 +180,7 @@ export default {
       page: 1,
       itemsPerPage: 4,
       sortBy: "name",
-      weekKeys: [1, 2, 3, 4, 5],
-      monthsArray: Array(12).fill(null).map((_, i) => i + 1),
+      monthsArray: Array(12).fill(null).map((_, i) => i + 1).map(x => `${x}月`),
       selectedMonth: null,
       monthly: null
     };
