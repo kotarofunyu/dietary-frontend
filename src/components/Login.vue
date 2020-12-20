@@ -42,7 +42,6 @@
 
 <script>
 import firebase from "@/plugins/firebase";
-import axios from "@/plugins/axios";
 export default {
   name: "LoginModal",
   data() {
@@ -64,7 +63,7 @@ export default {
         .signInWithEmailAndPassword(this.email, this.password)
         .then(
           (res) => {
-            console.log(res);
+            
             this.$router.push("/");
           },
           (err) => {

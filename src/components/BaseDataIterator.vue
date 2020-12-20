@@ -162,7 +162,6 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
 export default {
   name: "BaseDataIterator",
   props: {
@@ -250,7 +249,7 @@ export default {
       this.itemsPerPage = number;
     },
     getMonthly() {
-      axios.get(`http://localhost:3000/monthly?month=${this.selectedMonth}`)
+      this.axios.get(`http://localhost:3000/monthly?month=${this.selectedMonth}`)
       .then((response) => {
         this.monthly = response.data
       })

@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
   data: function () {
@@ -33,7 +32,7 @@ export default {
     }
   },
   mounted () {
-    axios.get('http://localhost:3000/users').then((response) => {
+    this.axios.get('http://localhost:3000/users').then((response) => {
       this.users = response.data
     }).catch(() => {
       alert('エラー')

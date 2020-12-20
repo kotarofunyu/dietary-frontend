@@ -39,7 +39,7 @@ export default {
             email: this.email,
             name: this.name
           }
-          axios.post("/users", { user })
+          this.axios.post("/users", { user })
         })
         .catch(error => {
           alert(error.message)
