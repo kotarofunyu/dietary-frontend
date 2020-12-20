@@ -74,9 +74,14 @@
             >
               <v-card>
                 <v-card-title class="subheading font-weight-bold">
-                  第{{ index+1 }}週
-                  平均体重: {{ averages[index] }}
+                  WEEK{{ index+1 }}
                 </v-card-title>
+                <v-card-subtitle v-if="weekAverage">
+                  Average {{ averages[index] }}kg
+                </v-card-subtitle>
+                <v-card-subtitle v-if="comparison">
+                  前週比較 -0.5kg
+                </v-card-subtitle>
 
                 <v-divider></v-divider>
 
