@@ -59,7 +59,6 @@ export default {
   },
   mounted: function() {
     const events = []
-    console.log(this)
     this.$options.propsData.weightsData.forEach((element) => {
       events.push({
         name: String(element.weight),

@@ -43,6 +43,7 @@
                 color="indigo darken-3"
                 value="indigo darken-3"
               ></v-switch>
+              <v-spacer></v-spacer>
               <v-switch
                 v-model="comparison"
                 label="前週比較"
@@ -93,11 +94,9 @@
                   Average {{ averages[index] }}kg
                 </v-card-subtitle>
                 <v-card-subtitle v-if="comparison">
-                  前週比較 -0.5kg
+                  前週比較 {{ averageDiffs[index] }}
                 </v-card-subtitle>
-
                 <v-divider></v-divider>
-
                 <v-list dense>
                   <v-list-item
                     v-for="item in value"
@@ -205,6 +204,7 @@ export default {
       selectedMonth: null,
       monthly: null,
       averages: [],
+      averageDiffs: [],
       weekAverage: false,
       comparison: false
     };
@@ -253,17 +253,31 @@ export default {
         }
         i += 1;
       });
+
       this.averages = [];
       weekly.forEach((arr) => {
         let weekWeights = arr.map((x) => x.weight);
         let sum = weekWeights.reduce((sum, element) => sum + element, 0);
         let av = sum / weekWeights.length;
         this.averages.push(Math.round(av * Math.pow(10, 2)) / Math.pow(10, 2));
+        this.averages = this.averages.filter(Boolean)
       });
-      console.log(this.averages);
-      console.log(weekly);
+
+      console.log(this.averages)
+
       return weekly;
     },
+    getAverageDiffs() {
+      this.averageDiffs = []
+      for (let i=0; i < this.averages.length; i++) {
+        if (i=0) {
+          this.averageDiffs.push(this.averages[i])
+        }else{
+          this.averageDiffs.push(this.averages[i] - this.averages[i - 1])
+        }
+      }
+      console.log(this.averageDiffs)
+    }
   },
   methods: {
     nextPage() {
