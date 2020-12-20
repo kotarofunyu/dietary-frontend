@@ -22,17 +22,11 @@
         :items-per-page="7"
       >
         <template v-slot:item.action="{ item }">
-          <v-btn
-            fab
-            small
-            class="mx-1"
-            color="indigo"
-            outlined
-          >
+          <v-btn fab small class="mx-1" color="indigo" outlined @click="showItem(item)">
             <v-icon>pageview</v-icon>
           </v-btn>
           <v-btn fab small color="indigo" outlined @click="editItem(item)">
-          <v-icon>mdi-pencil</v-icon>
+            <v-icon>mdi-pencil</v-icon>
           </v-btn>
           <v-btn
             fab
@@ -49,17 +43,21 @@
       </v-data-table>
       <RecordDetailModal
         :visible="detailDialog"
+        :id="showingItem.id"
+        :date="showingItem.date"
+        :weight="showingItem.weight"
+        :comment="showingItem.comment"
         @close="detailDialog = false"
       />
       <FormModal
-            :visible="dialog"
-            httpMethod="put"
-            :idData="editedItem.id"
-            :dateData="editedItem.date"
-            :weightData="editedItem.weight"
-            :commentData="editedItem.comment"
-            @close="dialog = false"
-          />
+        :visible="dialog"
+        httpMethod="put"
+        :idData="editedItem.id"
+        :dateData="editedItem.date"
+        :weightData="editedItem.weight"
+        :commentData="editedItem.comment"
+        @close="dialog = false"
+      />
     </v-container>
   </div>
 </template>
@@ -104,8 +102,14 @@ export default {
       editedItem: {
         id: 0,
         weight: 0,
-        date: '',
-        comment: ''
+        date: "",
+        comment: "",
+      },
+      showingItem: {
+        id: 0,
+        weight: 0,
+        date: "",
+        comment: "",
       },
       editedIndex: -1,
     };
@@ -114,11 +118,16 @@ export default {
     this.$store.dispatch("getWeightsDatas");
   },
   methods: {
-    editItem (item) {
-      this.editedIndex = this.items.indexOf(item)
-      this.editedItem = Object.assign({}, item)
-      this.dialog = true
-      console.log(this.editedItem)
+    editItem(item) {
+      this.editedIndex = this.items.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialog = true;
+      console.log(this.editedItem);
+    },
+    showItem(item) {
+      this.showingItem = Object.assign({}, item);
+      this.detailDialog = true;
+      console.log(this.showingItem)
     },
     deleteData(id) {
       if (confirm("このデータを削除しますか？")) {

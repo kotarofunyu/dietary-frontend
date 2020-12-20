@@ -150,11 +150,11 @@ export default {
       if (this.$refs.form.validate()) {
         this.axios({
           method: this.$props.httpMethod,
-          url: 'http://localhost:3000/weights/' + this.id,
+          url: 'http://localhost:3000/weights/' + this.innerId,
           params: {
             date: this.date,
             weight: parseFloat(this.weight),
-            comment: this.comment
+            comment: this.innerComment
           }
         })
         .then(function (response) {
