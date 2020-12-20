@@ -3,14 +3,15 @@
     <v-card id="form">
       <v-card-title>フォーム</v-card-title>
       <v-card-text>
+        <p>{{ date }}</p>
         <v-form ref="form">
           <v-date-picker
-            v-model="date"
+            v-model="innerDate"
             label="記録日"
             :rules="[required]"
           ></v-date-picker>
           <v-text-field
-            v-model.number="weight"
+            v-model.number="innerWeight"
             label="入力必須で文字数制限のあるテキストフィールド"
             placeholder="体重の数値"
             type="number"
@@ -18,7 +19,7 @@
           >
           </v-text-field>
           <v-textarea
-            v-model="comment"
+            v-model="innerComment"
             label="コメント"
             clearable
             filled
@@ -26,9 +27,6 @@
             counter
           >
           </v-textarea>
-          <p>
-            {{ this.weight }}
-          </p>
           <p v-show="notNumber">数値ではありません</p>
           <v-divider></v-divider>
           <v-card-actions>
@@ -68,7 +66,7 @@ export default {
     idData: {
       type: Number,
       default: null,
-      required: false
+      required: true
     },
     dateData: {
       type: String,
@@ -99,6 +97,54 @@ export default {
       }.bind(this)
     }
   },
+  computed: {
+    show: {
+      get () {
+        return this.visible
+      },
+      set (value) {
+        if (!value) {
+          this.$emit('close')
+        }
+      }
+    },
+    innerId: {
+      get () {
+        return this.$props.idData
+      },
+      set (newValue) {
+        this.id = newValue
+      }
+    },
+    innerDate: {
+      get () {
+        return this.$props.dateData
+      },
+      set (newValue) {
+        this.date = newValue
+      }
+    },
+    innerWeight: {
+      get () {
+        return this.$props.weightData
+      },
+      set (newValue) {
+        this.weight = newValue
+      }
+    },
+    innerComment: {
+      get () {
+        return this.$props.commentData
+      },
+      set (newValue) {
+        this.comment = newValue
+      }
+    },
+    notNumber() {
+      const value = Number(this.weight);
+      return Number.isNaN(value);
+    }
+  },
   methods: {
     submit () {
       if (this.$refs.form.validate()) {
@@ -126,22 +172,6 @@ export default {
         this.success = false
       }
     }
-  },
-  computed: {
-      show: {
-        get () {
-          return this.visible
-        },
-        set (value) {
-          if (!value) {
-            this.$emit('close')
-          }
-        }
-      },
-      notNumber() {
-        const value = Number(this.weight);
-        return Number.isNaN(value);
-      }
-    }
+  }
 };
 </script>
