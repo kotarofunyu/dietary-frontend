@@ -15,7 +15,12 @@
         dismissible
         >失敗しました</v-alert
       >
-      <v-data-table :headers="headers" :items="items" :items-per-page="7">
+      <v-data-table
+        :headers="headers"
+        :items="items"
+        item-key="id"
+        :items-per-page="7"
+      >
         <template v-slot:item.action="{ item }">
           <v-btn
             fab
@@ -23,28 +28,13 @@
             class="mx-1"
             color="indigo"
             outlined
-            :to="{
-              name: 'RecordDetail',
-              params: {
-                id: item.id,
-                weight: item.weight,
-                comment: item.comment,
-                date: item.date,
-              },
-            }"
+            @click="detailDialog = true;"
           >
             <v-icon>pageview</v-icon>
           </v-btn>
-          <v-btn
-            fab
-            small
-            color="indigo"
-            outlined
-            @click="dialog=true"
-          >
+          <v-btn fab small color="indigo" outlined @click="dialog = true">
           <v-icon>mdi-pencil</v-icon>
           </v-btn>
-          <p>{{ item }}</p>
           <FormModal
             :visible="dialog"
             httpMethod="put"
@@ -52,7 +42,7 @@
             :dateData="item.date"
             :weightData="item.weight"
             :commentData="item.comment"
-            @close="dialog=false"
+            @close="dialog = false"
           />
           <v-btn
             fab
@@ -60,30 +50,38 @@
             color="indigo"
             outlined
             class="mx-1"
-            @click="deleteData(item.id)">
+            @click="deleteData(item.id)"
+          >
             <v-icon>delete</v-icon>
           </v-btn>
         </template>
         <router-link to="/record/" + item.id>detail</router-link>
       </v-data-table>
+      <RecordDetailModal
+        :visible="detailDialog"
+        @close="detailDialog = false"
+      />
     </v-container>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import FormModal from './FormModal'
+import RecordDetailModal from "./RecordDetailModal";
+import FormModal from "./FormModal";
 export default {
   name: "RecordList",
   components: {
-    FormModal
+    FormModal,
+    RecordDetailModal,
   },
   data() {
     return {
+      detailDialog: false,
       dialog: false,
       isDeleteDone: false,
       isError: false,
-      tabItems: ['全記録', '月別', '数値分析'],
+      tabItems: ["全記録", "月別", "数値分析"],
       headers: [
         {
           text: "Date",
