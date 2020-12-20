@@ -37,6 +37,19 @@
                 @change="getMonthly"
               ></v-select>
               <v-spacer></v-spacer>
+              <v-switch
+                v-model="weekAverage"
+                label="週平均"
+                color="indigo darken-3"
+                value="indigo darken-3"
+              ></v-switch>
+              <v-switch
+                v-model="comparison"
+                label="前週比較"
+                color="indigo darken-3"
+                value="indigo darken-3"
+              ></v-switch>
+              <v-spacer></v-spacer>
               <v-btn-toggle
                 v-model="sortDesc"
                 mandatory
@@ -173,8 +186,8 @@ export default {
     weightsData: {
       type: Array,
       default: null,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -185,10 +198,15 @@ export default {
       page: 1,
       itemsPerPage: 4,
       sortBy: "name",
-      monthsArray: Array(12).fill(null).map((_, i) => i + 1).map(x => `${x}月`),
+      monthsArray: Array(12)
+        .fill(null)
+        .map((_, i) => i + 1)
+        .map((x) => `${x}月`),
       selectedMonth: null,
       monthly: null,
-      averages: []
+      averages: [],
+      weekAverage: false,
+      comparison: false
     };
   },
   computed: {
@@ -196,51 +214,55 @@ export default {
       return Math.ceil(this.weekly.length / this.itemsPerPage);
     },
     weekly() {
-      const weekly = [[], [], [], [], []]
-      if (!this.monthly) { return weekly }
-      const weightsData = this.monthly
-      const amount = weightsData.length
-      let i = 0
+      const weekly = [[], [], [], [], []];
+      if (!this.monthly) {
+        return weekly;
+      }
+      const weightsData = this.monthly;
+      const amount = weightsData.length;
+      let i = 0;
       weightsData.forEach((element) => {
-        if (i > amount ) { return }
+        if (i > amount) {
+          return;
+        }
         if (i <= 6) {
           weekly[0].push({
             date: element.date,
-            weight: element.weight
-          })
-        }else if (i <= 13) {
+            weight: element.weight,
+          });
+        } else if (i <= 13) {
           weekly[1].push({
             date: element.date,
-            weight: element.weight
-          })
-        }else if (i <= 20) {
+            weight: element.weight,
+          });
+        } else if (i <= 20) {
           weekly[2].push({
             date: element.date,
-            weight: element.weight
-          })
-        }else if (i <= 27) {
+            weight: element.weight,
+          });
+        } else if (i <= 27) {
           weekly[3].push({
             date: element.date,
-            weight: element.weight
-          })
-        }else if (i <= 31) {
+            weight: element.weight,
+          });
+        } else if (i <= 31) {
           weekly[4].push({
             date: element.date,
-            weight: element.weight
-          })
+            weight: element.weight,
+          });
         }
-        i += 1
-      })
-      this.averages = []
+        i += 1;
+      });
+      this.averages = [];
       weekly.forEach((arr) => {
-        let weekWeights = arr.map(x => x.weight)
-        let sum = weekWeights.reduce((sum, element) => sum + element, 0)
-        let av = sum / weekWeights.length
-        this.averages.push(Math.round(av * Math.pow(10, 2)) / Math.pow(10, 2))
-      })
-      console.log(this.averages)
-      console.log(weekly)
-      return weekly
+        let weekWeights = arr.map((x) => x.weight);
+        let sum = weekWeights.reduce((sum, element) => sum + element, 0);
+        let av = sum / weekWeights.length;
+        this.averages.push(Math.round(av * Math.pow(10, 2)) / Math.pow(10, 2));
+      });
+      console.log(this.averages);
+      console.log(weekly);
+      return weekly;
     },
   },
   methods: {
@@ -254,13 +276,14 @@ export default {
       this.itemsPerPage = number;
     },
     getMonthly() {
-      this.axios.get(`http://localhost:3000/monthly?month=${this.selectedMonth}`)
-      .then((response) => {
-        this.monthly = response.data
-      })
-      .catch((error) => {
-        this.monthly = []
-      })
+      this.axios
+        .get(`http://localhost:3000/monthly?month=${this.selectedMonth}`)
+        .then((response) => {
+          this.monthly = response.data;
+        })
+        .catch((error) => {
+          this.monthly = [];
+        });
     },
   },
 };
