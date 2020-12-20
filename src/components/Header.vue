@@ -31,6 +31,7 @@
               <v-list-item-title>{{ item.title }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+          <FormModal />
           <LoginModal />
         </v-list>
       </v-navigation-drawer>
@@ -43,10 +44,12 @@ import LoginModal from "@/components/Login"
 import { mapState } from "vuex";
 import authCheck from "@/plugins/auth-check";
 import firebase from "@/plugins/firebase";
+import FormModal from './FormModal';
 export default {
   name: "Header",
   components: {
-    LoginModal
+    LoginModal,
+    FormModal
   },
   data() {
     return {
