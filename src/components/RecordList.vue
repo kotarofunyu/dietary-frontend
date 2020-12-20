@@ -18,8 +18,11 @@
       <v-data-table :headers="headers" :items="items" :items-per-page="7">
         <template v-slot:item.action="{ item }">
           <v-btn
+            fab
             small
             class="mx-1"
+            color="indigo"
+            outlined
             :to="{
               name: 'RecordDetail',
               params: {
@@ -30,23 +33,35 @@
               },
             }"
           >
-            <v-icon>pageview</v-icon>詳細
+            <v-icon>pageview</v-icon>
           </v-btn>
           <v-btn
-            :to="{
-              name: 'edit',
-              params: {
-                id: item.id,
-                weight: item.weight,
-                date: item.date,
-                comment: item.comment,
-              },
-            }"
+            fab
+            small
+            color="indigo"
+            outlined
+            @click="dialog=true"
           >
-            編集
+          <v-icon>mdi-pencil</v-icon>
           </v-btn>
-          <v-btn small class="mx-1" @click="deleteData(item.id)">
-            <v-icon>pageview</v-icon>削除
+          <p>{{ item }}</p>
+          <FormModal
+            :visible="dialog"
+            httpMethod="put"
+            :idData="item.id"
+            :dateData="item.date"
+            :weightData="item.weight"
+            :commentData="item.comment"
+            @close="dialog=false"
+          />
+          <v-btn
+            fab
+            small
+            color="indigo"
+            outlined
+            class="mx-1"
+            @click="deleteData(item.id)">
+            <v-icon>delete</v-icon>
           </v-btn>
         </template>
         <router-link to="/record/" + item.id>detail</router-link>
@@ -57,11 +72,15 @@
 
 <script>
 import { mapState } from "vuex";
-import axios from "axios";
+import FormModal from './FormModal'
 export default {
   name: "RecordList",
+  components: {
+    FormModal
+  },
   data() {
     return {
+      dialog: false,
       isDeleteDone: false,
       isError: false,
       tabItems: ['全記録', '月別', '数値分析'],
@@ -93,7 +112,7 @@ export default {
   methods: {
     deleteData(id) {
       if (confirm("このデータを削除しますか？")) {
-        axios
+        this.axios
           .delete("http://localhost:3000/weights/" + id, { data: { id: id } })
           .then((response) => {
             this.deleteItemFromItems(this.items, id);

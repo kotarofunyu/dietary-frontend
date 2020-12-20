@@ -1,8 +1,5 @@
 <template v-slot:append>
-  <v-dialog v-model="dialog" persistent max-width="600px">
-    <template v-slot:activator="{ on, attrs }">
-      <v-btn color="primary" dark v-bind="attrs" v-on="on">記録する</v-btn>
-    </template>
+  <v-dialog v-model="show" persistent :retain-focus="false" max-width="600px">
     <v-card id="form">
       <v-card-title>フォーム</v-card-title>
       <v-card-text>
@@ -40,7 +37,7 @@
           </v-card-actions>
           <v-spacer></v-spacer>
           <v-card-actions>
-            <v-btn color="grey" text @click="dialog = false"> 閉じる </v-btn>
+            <v-btn color="grey" text @click.stop="show = false"> 閉じる </v-btn>
           </v-card-actions>
         </v-form>
       </v-card-text>
@@ -53,14 +50,24 @@ import firebase from "@/plugins/firebase";
 export default {
   name: "FormModal",
   props: {
+    visible: {
+      type: Boolean,
+      default: false,
+      required: false
+    },
     httpMethod: {
       type: String,
       default: 'post',
-      required: true
+      required: false
     },
     addParams: {
       type: Number,
-      default: "",
+      default: null,
+      required: false
+    },
+    idData: {
+      type: Number,
+      default: null,
       required: false
     },
     dateData: {
@@ -81,7 +88,7 @@ export default {
   },
   data() {
     return {
-      dialog: false,
+      id: this.$props.idData,
       date: this.$props.dateData,
       weight: this.$props.weightData,
       comment: this.$props.commentData,
@@ -95,9 +102,9 @@ export default {
   methods: {
     submit () {
       if (this.$refs.form.validate()) {
-        axios({
+        this.axios({
           method: this.$props.httpMethod,
-          url: 'http://localhost:3000/weights/' + this.$props.addParams,
+          url: 'http://localhost:3000/weights/' + this.id,
           params: {
             date: this.date,
             weight: parseFloat(this.weight),
@@ -110,10 +117,9 @@ export default {
           this.date = ''
           this.weight = null
           this.comment = ''
-          this.$router.push('/record')
+          this.$emit('close')
         }.bind(this))
         .catch(function (error) {
-          console.log(error)
           this.success = false
         }.bind(this))
       } else {
@@ -122,10 +128,18 @@ export default {
     }
   },
   computed: {
+      show: {
+        get () {
+          return this.visible
+        },
+        set (value) {
+          if (!value) {
+            this.$emit('close')
+          }
+        }
+      },
       notNumber() {
         const value = Number(this.weight);
-        console.log(value);
-        console.log(this.weight);
         return Number.isNaN(value);
       }
     }
