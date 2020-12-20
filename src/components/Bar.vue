@@ -18,7 +18,6 @@
           ]
         },
         options: {
-          // responsive: true,
           scales: {
             xAxes: [{
               scaleLabel: {

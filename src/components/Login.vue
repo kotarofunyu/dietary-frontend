@@ -1,12 +1,26 @@
 <template v-slot:append>
   <v-dialog v-model="dialog" persistent max-width="600px">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn color="primary" dark v-bind="attrs" @click="signOut" v-if="user"
-        >ログアウト</v-btn
-      >
-      <v-btn color="primary" dark v-bind="attrs" v-on="on" v-else
-        >ログイン</v-btn
-      >
+      <v-row align="center">
+        <v-btn
+          color="primary"
+          align="center"
+          dark
+          v-bind="attrs"
+          @click="signOut"
+          v-if="user"
+          >ログアウト</v-btn
+        >
+        <v-btn
+          color="primary"
+          align="center"
+          dark
+          v-bind="attrs"
+          v-on="on"
+          v-else
+          >ログイン</v-btn
+        >
+      </v-row>
     </template>
     <v-card>
       <v-card-title>
@@ -63,7 +77,6 @@ export default {
         .signInWithEmailAndPassword(this.email, this.password)
         .then(
           (res) => {
-            
             this.$router.push("/");
           },
           (err) => {

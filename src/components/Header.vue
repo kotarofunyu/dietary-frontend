@@ -7,13 +7,12 @@
       <v-navigation-drawer
         v-model="drawer"
         color="#039BE5"
-        :mini-variant="miniVariant"
-        :permanent="permanent"
+        permanent="permanent"
         dark
         app
       >
         <v-list>
-          <v-list-item two-line :class="miniVariant && 'px-0'">
+          <v-list-item two-line class='px-0'>
             <v-list-item-avatar>
               <img src="https://randomuser.me/api/portraits/men/81.jpg">
             </v-list-item-avatar>
@@ -31,7 +30,6 @@
               <v-list-item-title>{{ item.title }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <FormModal />
           <LoginModal />
         </v-list>
       </v-navigation-drawer>
