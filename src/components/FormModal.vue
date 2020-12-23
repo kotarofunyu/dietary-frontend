@@ -51,38 +51,38 @@ export default {
     visible: {
       type: Boolean,
       default: false,
-      required: false
+      required: false,
     },
     httpMethod: {
       type: String,
-      default: 'post',
-      required: false
+      default: "post",
+      required: false,
     },
     addParams: {
       type: Number,
       default: null,
-      required: false
+      required: false,
     },
     idData: {
       type: Number,
       default: null,
-      required: true
+      required: true,
     },
     dateData: {
       type: String,
-      default: '',
-      required: false
+      default: "",
+      required: false,
     },
     weightData: {
       type: Number,
       default: null,
-      reqiured: false
+      reqiured: false,
     },
     commentData: {
       type: String,
-      default: '',
-      required: false
-    }
+      default: "",
+      required: false,
+    },
   },
   data() {
     return {
@@ -91,87 +91,93 @@ export default {
       weight: this.$props.weightData,
       comment: this.$props.commentData,
       success: false,
-      required: function(value) {
-        if (this.success === true) { return }
-        return !!value || "必ず入力してください"
-      }.bind(this)
-    }
+      required: function (value) {
+        if (this.success === true) {
+          return;
+        }
+        return !!value || "必ず入力してください";
+      }.bind(this),
+    };
   },
   computed: {
     show: {
-      get () {
-        return this.visible
+      get() {
+        return this.visible;
       },
-      set (value) {
+      set(value) {
         if (!value) {
-          this.$emit('close')
+          this.$emit("close");
         }
-      }
+      },
     },
     innerId: {
-      get () {
-        return this.$props.idData
+      get() {
+        return this.$props.idData;
       },
-      set (newValue) {
-        this.id = newValue
-      }
+      set(newValue) {
+        this.id = newValue;
+      },
     },
     innerDate: {
-      get () {
-        return this.$props.dateData
+      get() {
+        return this.$props.dateData;
       },
-      set (newValue) {
-        this.date = newValue
-      }
+      set(newValue) {
+        this.date = newValue;
+      },
     },
     innerWeight: {
-      get () {
-        return this.$props.weightData
+      get() {
+        return this.$props.weightData;
       },
-      set (newValue) {
-        this.weight = newValue
-      }
+      set(newValue) {
+        this.weight = newValue;
+      },
     },
     innerComment: {
-      get () {
-        return this.$props.commentData
+      get() {
+        return this.$props.commentData;
       },
-      set (newValue) {
-        this.comment = newValue
-      }
+      set(newValue) {
+        this.comment = newValue;
+      },
     },
     notNumber() {
       const value = Number(this.weight);
       return Number.isNaN(value);
-    }
+    },
   },
   methods: {
-    submit () {
+    submit() {
       if (this.$refs.form.validate()) {
         this.axios({
           method: this.$props.httpMethod,
-          url: 'http://localhost:3000/weights/' + this.innerId,
+          url: "/weights/" + this.innerId,
           params: {
             date: this.date,
             weight: parseFloat(this.weight),
-            comment: this.innerComment
-          }
+            comment: this.innerComment,
+          },
         })
-        .then(function (response) {
-          console.log(response.statusText)
-          this.success = true
-          this.date = ''
-          this.weight = null
-          this.comment = ''
-          this.$emit('close')
-        }.bind(this))
-        .catch(function (error) {
-          this.success = false
-        }.bind(this))
+          .then(
+            function (response) {
+              console.log(response.statusText);
+              this.success = true;
+              this.date = "";
+              this.weight = null;
+              this.comment = "";
+              this.$emit("close");
+            }.bind(this)
+          )
+          .catch(
+            function (error) {
+              this.success = false;
+            }.bind(this)
+          );
       } else {
-        this.success = false
+        this.success = false;
       }
-    }
-  }
+    },
+  },
 };
 </script>
