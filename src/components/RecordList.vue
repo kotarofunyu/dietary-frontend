@@ -22,7 +22,14 @@
         :items-per-page="7"
       >
         <template v-slot:item.action="{ item }">
-          <v-btn fab small class="mx-1" color="indigo" outlined @click="showItem(item)">
+          <v-btn
+            fab
+            small
+            class="mx-1"
+            color="indigo"
+            outlined
+            @click="showItem(item)"
+          >
             <v-icon>pageview</v-icon>
           </v-btn>
           <v-btn fab small color="indigo" outlined @click="editItem(item)">
@@ -41,14 +48,6 @@
         </template>
         <router-link to="/record/" + item.id>detail</router-link>
       </v-data-table>
-      <RecordDetailModal
-        :visible="detailDialog"
-        :id="showingItem.id"
-        :date="showingItem.date"
-        :weight="showingItem.weight"
-        :comment="showingItem.comment"
-        @close="detailDialog = false"
-      />
       <FormModal
         :visible="dialog"
         httpMethod="put"
@@ -64,13 +63,11 @@
 
 <script>
 import { mapState } from "vuex";
-import RecordDetailModal from "./RecordDetailModal";
 import FormModal from "./FormModal";
 export default {
   name: "RecordList",
   components: {
     FormModal,
-    RecordDetailModal,
   },
   data() {
     return {
@@ -127,7 +124,7 @@ export default {
     showItem(item) {
       this.showingItem = Object.assign({}, item);
       this.detailDialog = true;
-      console.log(this.showingItem)
+      console.log(this.showingItem);
     },
     deleteData(id) {
       if (confirm("このデータを削除しますか？")) {
