@@ -129,7 +129,7 @@ export default {
     deleteData(id) {
       if (confirm("このデータを削除しますか？")) {
         this.axios
-          .delete("http://localhost:3000/weights/" + id, { data: { id: id } })
+          .delete("/weights/" + id, { data: { id: id } })
           .then((response) => {
             this.deleteItemFromItems(this.items, id);
             this.isDeleteDone = true;

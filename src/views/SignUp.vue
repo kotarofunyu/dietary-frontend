@@ -1,56 +1,60 @@
 <template>
   <div class="signup">
     <h2>Sign up</h2>
-    <input type="text" placeholder="Name" v-model="name">
-    <input type="email" placeholder="Email" v-model="email">
-    <input type="password" placeholder="Password" v-model="password">
+    <input type="text" placeholder="Name" v-model="name" />
+    <input type="email" placeholder="Email" v-model="email" />
+    <input type="password" placeholder="Password" v-model="password" />
     <button @click="signUp">Register</button>
-    <p>Do you have an account?
+    <p>
+      Do you have an account?
       <router-link to="/signin">sign in now!!~~</router-link>
     </p>
   </div>
 </template>
 
 <script>
-import firebase from '@/plugins/firebase'
-import axios from '@/plugins/axios'
+import firebase from "@/plugins/firebase";
+import axios from "@/plugins/axios";
 export default {
-  name: 'Signup',
+  name: "Signup",
   data() {
     return {
-      name: '',
-      email: '',
-      password: '',
+      name: "",
+      email: "",
+      password: "",
       user: null,
-    }
+    };
   },
-  created: function() {
+  created: function () {
     if (this.$store.state.currentUser) {
-      this.$router.push("/")
+      this.$router.push("/");
     }
   },
   methods: {
-    signUp: function() {
-      firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
-        .then(res => {
-          alert("Create account!")
+    signUp: function () {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.email, this.password)
+        .then((res) => {
+          alert("Create account!");
           const user = {
             uid: res.user.uid,
             email: this.email,
-            name: this.name
-          }
-          this.axios.post("/users", { user })
+            name: this.name,
+          };
+          this.axios.post("/users", { user });
         })
-        .catch(error => {
-          alert(error.message)
-        })
-    }
-  }
-}
+        .catch((error) => {
+          alert(error.message);
+        });
+    },
+  },
+};
 </script>
 
 <style scoped>
-h1, h2 {
+h1,
+h2 {
   font-weight: normal;
 }
 ul {
@@ -69,7 +73,7 @@ a {
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
-  align-items: center
+  align-items: center;
 }
 input {
   margin: 10px 0;

@@ -206,7 +206,7 @@ export default {
       averages: [],
       averageDiffs: [],
       weekAverage: false,
-      comparison: false
+      comparison: false,
     };
   },
   computed: {
@@ -260,24 +260,24 @@ export default {
         let sum = weekWeights.reduce((sum, element) => sum + element, 0);
         let av = sum / weekWeights.length;
         this.averages.push(Math.round(av * Math.pow(10, 2)) / Math.pow(10, 2));
-        this.averages = this.averages.filter(Boolean)
+        this.averages = this.averages.filter(Boolean);
       });
 
-      console.log(this.averages)
+      console.log(this.averages);
 
       return weekly;
     },
     getAverageDiffs() {
-      this.averageDiffs = []
-      for (let i=0; i < this.averages.length; i++) {
-        if (i=0) {
-          this.averageDiffs.push(this.averages[i])
-        }else{
-          this.averageDiffs.push(this.averages[i] - this.averages[i - 1])
+      this.averageDiffs = [];
+      for (let i = 0; i < this.averages.length; i++) {
+        if ((i = 0)) {
+          this.averageDiffs.push(this.averages[i]);
+        } else {
+          this.averageDiffs.push(this.averages[i] - this.averages[i - 1]);
         }
       }
-      console.log(this.averageDiffs)
-    }
+      console.log(this.averageDiffs);
+    },
   },
   methods: {
     nextPage() {
@@ -291,7 +291,7 @@ export default {
     },
     getMonthly() {
       this.axios
-        .get(`http://localhost:3000/monthly?month=${this.selectedMonth}`)
+        .get(`/monthly?month=${this.selectedMonth}`)
         .then((response) => {
           this.monthly = response.data;
         })
