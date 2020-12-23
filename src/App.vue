@@ -1,29 +1,24 @@
 <template>
   <v-app>
-    <Header/>
+    <Header />
     <v-main>
-      <router-view/>
+      <router-view />
     </v-main>
 
-    <v-footer app>
-    </v-footer>
+    <v-footer app> </v-footer>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
-import Header from './components/Header';
-import Home from './components/page1';
-import router from './router/index.js'
-import store from './store'
+import Header from "./components/Header";
+import router from "./router/index.js";
+import store from "./store";
 
 export default {
-  name: 'App',
+  name: "App",
 
   components: {
-    HelloWorld,
     Header,
-    Home
   },
 
   data: () => ({
