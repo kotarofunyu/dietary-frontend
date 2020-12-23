@@ -9,16 +9,15 @@
   </div>
 </template>
 <script>
-import LineChart from './Bar'
-import RecordList from './RecordList'
+import LineChart from "./Bar";
+import RecordList from "./RecordList";
 export default {
-  name: 'RecordAll',
+  name: "RecordAll",
   components: {
     LineChart,
-    RecordList
-  }
-}
+    RecordList,
+  },
+};
 </script>
 <style lang="">
-  
 </style>

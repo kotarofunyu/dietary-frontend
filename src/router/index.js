@@ -5,7 +5,6 @@ import Home from '../views/Home.vue'
 import Record from '../views/Record.vue'
 import EditView from '../views/Edit.vue'
 import CreateView from '../views/CreateView.vue'
-import User from '../views/User.vue'
 import RecordDetailView from '../views/RecordDetailView.vue'
 import Signup from '../views/SignUp.vue'
 import Signin from '../views/SignIn.vue'
@@ -37,11 +36,6 @@ const routes = [
     path: '/create',
     name: 'CreateView',
     component: CreateView
-  },
-  {
-    path: '/user',
-    name: 'User',
-    component: User
   },
   {
     path: '/signin',
