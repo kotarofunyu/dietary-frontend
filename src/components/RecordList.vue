@@ -22,23 +22,13 @@
         :items-per-page="7"
       >
         <template v-slot:item.action="{ item }">
-          <v-btn
-            fab
-            small
-            class="mx-1"
-            color="indigo"
-            outlined
-            @click="showItem(item)"
-          >
-            <v-icon>pageview</v-icon>
-          </v-btn>
-          <v-btn fab small color="indigo" outlined @click="editItem(item)">
+          <v-btn fab small color="blue" outlined @click="editItem(item)">
             <v-icon>mdi-pencil</v-icon>
           </v-btn>
           <v-btn
             fab
             small
-            color="indigo"
+            color="blue"
             outlined
             class="mx-1"
             @click="deleteData(item.id)"
@@ -48,15 +38,6 @@
         </template>
         <router-link to="/record/" + item.id>detail</router-link>
       </v-data-table>
-      <FormModal
-        :visible="dialog"
-        httpMethod="put"
-        :idData="editedItem.id"
-        :dateData="editedItem.date"
-        :weightData="editedItem.weight"
-        :commentData="editedItem.comment"
-        @close="dialog = false"
-      />
     </v-container>
   </div>
 </template>
@@ -71,8 +52,6 @@ export default {
   },
   data() {
     return {
-      detailDialog: false,
-      dialog: false,
       isDeleteDone: false,
       isError: false,
       tabItems: ["全記録", "月別", "数値分析"],
@@ -95,37 +74,14 @@ export default {
           value: "action",
         },
       ],
-      items: this.$store.state.weightsDatas,
-      editedItem: {
-        id: 0,
-        weight: 0,
-        date: "",
-        comment: "",
-      },
-      showingItem: {
-        id: 0,
-        weight: 0,
-        date: "",
-        comment: "",
-      },
-      editedIndex: -1,
+      items: [],
     };
   },
   mounted() {
     this.$store.dispatch("getWeightsDatas");
+    this.items = this.$store.state.weightsDatas;
   },
   methods: {
-    editItem(item) {
-      this.editedIndex = this.items.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.dialog = true;
-      console.log(this.editedItem);
-    },
-    showItem(item) {
-      this.showingItem = Object.assign({}, item);
-      this.detailDialog = true;
-      console.log(this.showingItem);
-    },
     deleteData(id) {
       if (confirm("このデータを削除しますか？")) {
         this.axios
