@@ -17,7 +17,8 @@ const routes = [
   {
     path: '/record',
     name: 'Record',
-    component: Record
+    component: Record,
+    meta: { requiresAuth: true }
   },
   {
     path: '/signin',
