@@ -12,9 +12,9 @@
         app
       >
         <v-list>
-          <v-list-item two-line class='px-0'>
+          <v-list-item two-line class="px-0">
             <v-list-item-avatar>
-              <img src="https://randomuser.me/api/portraits/men/81.jpg">
+              <img src="https://randomuser.me/api/portraits/men/81.jpg" />
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title>User</v-list-item-title>
@@ -30,6 +30,7 @@
               <v-list-item-title>{{ item.title }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+          <FormModal />
           <LoginModal />
         </v-list>
       </v-navigation-drawer>
@@ -38,16 +39,16 @@
 </template>
 
 <script>
-import LoginModal from "@/components/Login"
+import LoginModal from "@/components/Login";
 import { mapState } from "vuex";
 import authCheck from "@/plugins/auth-check";
 import firebase from "@/plugins/firebase";
-import FormModal from './FormModal';
+import FormModal from "./FormModal";
 export default {
   name: "Header",
   components: {
     LoginModal,
-    FormModal
+    FormModal,
   },
   data() {
     return {
