@@ -5,15 +5,12 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-import Form from '../components/Form'
+import Form from "../components/Form";
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
-    HelloWorld,
-    Form
-  }
-}
+    Form,
+  },
+};
 </script>
