@@ -5,6 +5,7 @@ import Home from '../views/Home.vue'
 import Record from '../views/Record.vue'
 import Signup from '../views/SignUp.vue'
 import Signin from '../views/SignIn.vue'
+import firebase from '../plugins/firebase'
 
 Vue.use(VueRouter)
 
@@ -17,7 +18,8 @@ const routes = [
   {
     path: '/record',
     name: 'Record',
-    component: Record
+    component: Record,
+    meta: { requiresAuth: true }
   },
   {
     path: '/signin',
@@ -36,12 +38,13 @@ const router = new VueRouter({
   routes
 })
 
-// router.beforeEach((to, from, next) => {
-//   if (store.state.currentUser) {
-//     next()
-//   } else {
-//     return page.path === '/signin'
-//   }
-// })
+router.beforeEach(async (to, from, next) => {
+  const requiresAuth = to.matched.some(recode => recode.meta.requiresAuth)
+  if (requiresAuth && !(await firebase.getCurrentUser())) {
+    next({ path: '/signin', query: { redirect: to.full_path } })
+  } else {
+    next()
+  }
+})
 
 export default router
