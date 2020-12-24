@@ -37,12 +37,13 @@ const router = new VueRouter({
   routes
 })
 
-// router.beforeEach((to, from, next) => {
-//   if (store.state.currentUser) {
-//     next()
-//   } else {
-//     return page.path === '/signin'
-//   }
-// })
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some(recode => recode.meta.requiresAuth)
+  if (requiresAuth) {
+    next({ path: '/signin', query: { redirect: to.full_path } })
+  } else {
+    next()
+  }
+})
 
 export default router
