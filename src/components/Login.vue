@@ -77,6 +77,11 @@ export default {
         .signInWithEmailAndPassword(this.email, this.password)
         .then(
           (res) => {
+            console.log(res.user.uid);
+            this.axios.get(`/users?uid=${res.user.uid}`).then((res) => {
+              this.$store.commit("setUser", res.data);
+              console.log(res.data);
+            });
             this.$router.push("/");
           },
           (err) => {
@@ -90,6 +95,7 @@ export default {
         .signOut()
         .then((res) => {
           this.$store.commit("setUser", null);
+          this.$router.push("/");
         })
         .catch((error) => {
           this.error = "ログアウトに失敗しました";

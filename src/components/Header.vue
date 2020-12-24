@@ -12,13 +12,12 @@
         app
       >
         <v-list>
-          <v-list-item two-line class="px-0">
+          <v-list-item two-line class="px-0" v-if="user">
             <v-list-item-avatar>
               <img src="https://randomuser.me/api/portraits/men/81.jpg" />
             </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title>User</v-list-item-title>
-              <v-list-item-subtitle>kotaro</v-list-item-subtitle>
+              <v-list-item-title>{{ user.name }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-divider></v-divider>
@@ -41,7 +40,6 @@
 <script>
 import LoginModal from "@/components/Login";
 import { mapState } from "vuex";
-import authCheck from "@/plugins/auth-check";
 import firebase from "@/plugins/firebase";
 import FormModal from "./FormModal";
 export default {
@@ -77,7 +75,6 @@ export default {
       return this.$store.state.currentUser;
     },
   },
-  mounted: authCheck(),
   methods: {
     setError(error, text) {
       this.error =

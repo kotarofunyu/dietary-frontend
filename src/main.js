@@ -4,7 +4,6 @@ import router from './router/index.js'
 import store from './store'
 import axios from './plugins/axios'
 import VueAxios from 'vue-axios'
-import checkLoggedIn from './plugins/check-logged-in'
 import vuetify from './plugins/vuetify'
 
 Vue.config.productionTip = false
@@ -16,6 +15,6 @@ new Vue({
   router,
   store,
   vuetify,
-  checkLoggedIn,
+  // checkLoggedIn,
   render: h => h(App)
 }).$mount('#app')
