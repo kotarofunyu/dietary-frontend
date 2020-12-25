@@ -11,7 +11,8 @@ export default new Vuex.Store({
     weights: [],
     dates: [],
     comments: [],
-    currentUser: null
+    currentUser: null,
+    authToken: ''
   },
   plugins: [
     createPersistedState({
@@ -32,6 +33,9 @@ export default new Vuex.Store({
     },
     setUser(state, payload) {
       state.currentUser = payload
+    },
+    setAuthToken(state, authToken) {
+      state.authToken = authToken
     }
   },
   actions: {
@@ -42,6 +46,9 @@ export default new Vuex.Store({
       axios.get('http://localhost:3000/weights').then(response => {
         commit('setWeightsDatas', response.data)
       })
+    },
+    getAuthToken(authToken) {
+      commit('setAuthToken', authToken)
     }
   },
   modules: {}
