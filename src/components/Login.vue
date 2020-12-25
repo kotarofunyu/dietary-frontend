@@ -77,17 +77,28 @@ export default {
         .signInWithEmailAndPassword(this.email, this.password)
         .then(
           (res) => {
-            console.log(res.user.uid);
-            this.axios.get(`/users?uid=${res.user.uid}`).then((res) => {
-              this.$store.commit("setUser", res.data);
-              console.log(res.data);
-            });
-            this.$router.push("/");
+            console.log(res);
+            this.getIdToken();
           },
           (err) => {
             this.error = "ログインに失敗しました  ";
           }
         );
+    },
+    getIdToken: async function () {
+      const token = await firebase.auth().currentUser.getIdToken(true);
+      const data = { token };
+      console.log(data);
+      this.axios
+        .post("/auth", data, { headers: { Authorization: data.token } })
+        .then((res) => {
+          this.$store.commit("setUser", res.data);
+          console.log(res.data);
+          this.$router.push("/");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     signOut: function () {
       firebase
