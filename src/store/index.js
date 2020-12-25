@@ -43,9 +43,13 @@ export default new Vuex.Store({
       commit('fetchSignedIn')
     },
     getWeightsDatas({ commit }) {
-      axios.get('http://localhost:3000/weights').then(response => {
-        commit('setWeightsDatas', response.data)
-      })
+      axios
+        .get('http://localhost:3000/weights', {
+          headers: { Authorization: this.state.authToken }
+        })
+        .then(response => {
+          commit('setWeightsDatas', response.data)
+        })
     },
     getAuthToken(authToken) {
       commit('setAuthToken', authToken)
