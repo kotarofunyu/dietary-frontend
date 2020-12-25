@@ -89,7 +89,6 @@ export default {
       const token = await firebase.auth().currentUser.getIdToken(true);
       const data = { token };
       this.$store.commit("setAuthToken", data.token);
-      console.log(this.$store.state.authToken);
       this.axios
         .post(
           "/auth",
@@ -98,8 +97,6 @@ export default {
         )
         .then((res) => {
           this.$store.commit("setUser", res.data);
-          console.log(res.data);
-          console.log(this);
           this.$router.push("/");
         })
         .catch((err) => {

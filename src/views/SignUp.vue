@@ -64,7 +64,6 @@ export default {
         )
         .then((res) => {
           this.$store.commit("setUser", res.data);
-          console.log(res.data);
           this.$router.push("/");
         });
     },

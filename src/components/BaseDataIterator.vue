@@ -199,8 +199,7 @@ export default {
       sortBy: "name",
       monthsArray: Array(12)
         .fill(null)
-        .map((_, i) => i + 1)
-        .map((x) => `${x}月`),
+        .map((_, i) => i + 1),
       selectedMonth: null,
       monthly: null,
       averages: [],
