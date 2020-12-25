@@ -88,12 +88,10 @@ export default {
     getIdToken: async function () {
       const token = await firebase.auth().currentUser.getIdToken(true);
       const data = { token };
-      console.log(data);
       this.axios
         .post("/auth", data, { headers: { Authorization: data.token } })
         .then((res) => {
           this.$store.commit("setUser", res.data);
-          console.log(res.data);
           this.$router.push("/");
         })
         .catch((err) => {
