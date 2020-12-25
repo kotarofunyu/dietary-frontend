@@ -78,7 +78,6 @@ export default {
         .then(
           (res) => {
             console.log(res);
-            console.log(res.user.email);
             this.getIdToken();
           },
           (err) => {
@@ -89,11 +88,13 @@ export default {
     getIdToken: async function () {
       const token = await firebase.auth().currentUser.getIdToken(true);
       const data = { token };
+      this.$store.commit("setAuthToken", data.token);
+      console.log(this.$store.state.authToken);
       this.axios
         .post(
           "/auth",
           { user: { email: this.email } },
-          { headers: { Authorization: data.token } }
+          { headers: { Authorization: this.$store.state.authToken } }
         )
         .then((res) => {
           this.$store.commit("setUser", res.data);
