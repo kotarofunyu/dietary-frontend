@@ -78,6 +78,7 @@ export default {
         .then(
           (res) => {
             console.log(res);
+            console.log(res.user.email);
             this.getIdToken();
           },
           (err) => {
@@ -89,9 +90,15 @@ export default {
       const token = await firebase.auth().currentUser.getIdToken(true);
       const data = { token };
       this.axios
-        .post("/auth", data, { headers: { Authorization: data.token } })
+        .post(
+          "/auth",
+          { user: { email: this.email } },
+          { headers: { Authorization: data.token } }
+        )
         .then((res) => {
           this.$store.commit("setUser", res.data);
+          console.log(res.data);
+          console.log(this);
           this.$router.push("/");
         })
         .catch((err) => {

@@ -23,6 +23,7 @@ export default {
       email: "",
       password: "",
       user: null,
+      uid: null,
     };
   },
   created: function () {
@@ -36,16 +37,35 @@ export default {
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
         .then((res) => {
-          alert("Create account!");
-          const user = {
-            uid: res.user.uid,
-            email: this.email,
-            name: this.name,
-          };
-          this.axios.post("/users", { user });
+          this.uid = res.user.uid;
+          this.email = res.user.email;
+          this.getIdToken();
         })
         .catch((error) => {
           alert(error.message);
+        });
+    },
+    getIdToken: async function () {
+      const token = await firebase.auth().currentUser.getIdToken(true);
+      const data = { token };
+      const params = {};
+      this.axios
+        .post(
+          "/auth",
+          {
+            user: {
+              name: this.name,
+              email: this.email,
+              uid: this.uid,
+              hoge: "hogehoge",
+            },
+          },
+          { headers: { Authorization: data.token } }
+        )
+        .then((res) => {
+          this.$store.commit("setUser", res.data);
+          console.log(res.data);
+          this.$router.push("/");
         });
     },
   },
