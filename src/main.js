@@ -15,6 +15,5 @@ new Vue({
   router,
   store,
   vuetify,
-  // checkLoggedIn,
   render: h => h(App)
 }).$mount('#app')
