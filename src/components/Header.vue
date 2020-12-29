@@ -75,6 +75,11 @@ export default {
       return this.$store.state.currentUser;
     },
   },
+  mounted: function () {
+    this.checkSignedIn();
+    this.getCurrentAuthToken();
+    this.hoge();
+  },
   methods: {
     setError(error, text) {
       this.error =
@@ -91,6 +96,25 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    getCurrentAuthToken: async function () {
+      const token = await firebase.auth().currentUser.getIdToken(true);
+      const data = { token };
+      this.$store.commit("setAuthToken", data.token);
+      console.log(data);
+    },
+    checkSignedIn() {
+      firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          console.log(user);
+        } else {
+          console.log("有効期限が切れているか、ログインしていません。");
+        }
+      });
+    },
+    hoge() {
+      const user = firebase.auth().currentUser;
+      console.log(user);
     },
   },
 };
