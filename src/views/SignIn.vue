@@ -1,10 +1,11 @@
 <template>
   <div class="signin">
     <h2>Sign up</h2>
-    <input type="email" placeholder="Email" v-model="email">
-    <input type="password" placeholder="Password" v-model="password">
+    <input type="email" placeholder="Email" v-model="email" />
+    <input type="password" placeholder="Password" v-model="password" />
     <button @click="signIn">ログイン</button>
-    <p>登録はまだですか？
+    <p>
+      登録はまだですか？
       <router-link to="/signin">新規登録する</router-link>
     </p>
     <p v-if="error">{{ error }}</p>
@@ -12,39 +13,39 @@
 </template>
 
 <script>
-import firebase from '@/plugins/firebase'
-import axios from '@/plugins/axios'
+import firebase from "@/plugins/firebase";
+import axios from "@/plugins/axios";
 export default {
-  name: 'Signin',
+  name: "Signin",
   data() {
     return {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
       user: null,
-      error: ''
-    }
-  },
-  mounted: function() {
-    // ログイン済みであればトップへ遷移する
-    if (this.$store.state.currentUser) {
-      this.$router.push("/")
-    }
+      error: "",
+    };
   },
   methods: {
-    signIn: function() {
-      firebase.auth().signInWithEmailAndPassword(this.email, this.password)
-        .then(res => {
-          this.$router.push("/")
-        }, err => {
-          this.error = "メールアドレスかパスワードに誤りがあります。"
-        });
-    }
-  }
-}
+    signIn: function () {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then(
+          (res) => {
+            this.$router.push("/");
+          },
+          (err) => {
+            this.error = "メールアドレスかパスワードに誤りがあります。";
+          }
+        );
+    },
+  },
+};
 </script>
 
 <style scoped>
-h1, h2 {
+h1,
+h2 {
   font-weight: normal;
 }
 ul {
@@ -63,7 +64,7 @@ a {
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
-  align-items: center
+  align-items: center;
 }
 input {
   margin: 10px 0;

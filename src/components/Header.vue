@@ -42,6 +42,7 @@ import LoginModal from "@/components/Login";
 import { mapState } from "vuex";
 import firebase from "@/plugins/firebase";
 import FormModal from "./FormModal";
+import plainAxios from "axios";
 export default {
   name: "Header",
   components: {
@@ -75,6 +76,11 @@ export default {
       return this.$store.state.currentUser;
     },
   },
+  mounted: function () {
+    this.checkSignedIn();
+    this.getCurrentAuthToken();
+    this.hoge();
+  },
   methods: {
     setError(error, text) {
       this.error =
@@ -91,6 +97,43 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    getCurrentAuthToken: async function () {
+      const token = await firebase.auth().currentUser.getIdToken(true);
+      const data = { token };
+      this.$store.commit("setAuthToken", data.token);
+      console.log(`jwtトークン：${data.token}`);
+    },
+    checkSignedIn() {
+      firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          console.log(user);
+          const refresh_token = user.refreshToken;
+          console.log(refresh_token);
+          const requestBody = {
+            grant_type: "refresh_token",
+            refresh_token: refresh_token,
+          };
+          plainAxios
+            .post(
+              `https://securetoken.googleapis.com/v1/token?key=${process.env.VUE_APP_API_KEY}`,
+              JSON.stringify(requestBody)
+            )
+            .then((res) => {
+              this.$store.commit("setAuthToken", res.access_token);
+              console.log(res);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        } else {
+          console.log("有効期限が切れているか、ログインしていません。");
+        }
+      });
+    },
+    hoge() {
+      const user = firebase.auth().currentUser;
+      console.log(user);
     },
   },
 };
