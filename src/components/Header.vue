@@ -18,15 +18,6 @@
         app
       >
         <v-list>
-          <v-list-item two-line class="px-0" v-if="user">
-            <v-list-item-avatar>
-              <img src="https://randomuser.me/api/portraits/men/81.jpg" />
-            </v-list-item-avatar>
-            <v-list-item-content>
-              <v-list-item-title>{{ user.name }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-divider></v-divider>
           <v-list-item v-for="item in items" :key="item.title" :to="item.link">
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
