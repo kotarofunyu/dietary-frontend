@@ -6,10 +6,8 @@
         <p>aaaaa</p>
         <v-spacer></v-spacer>
         <v-avatar color="primary" size="48" v-if="user">
-          <span>kotaro</span>
-        </v-avatar>
-        <v-avatar color="primary" size="48" v-else>
-          <span>NoUser</span>
+          <span v-if="user">{{ user.name }}</span>
+          <span v-else>NoUser</span>
         </v-avatar>
       </v-app-bar>
       <v-navigation-drawer
