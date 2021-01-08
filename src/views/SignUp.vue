@@ -50,18 +50,13 @@ export default {
       const data = { token };
       const params = {};
       this.axios
-        .post(
-          "/auth",
-          {
-            user: {
-              name: this.name,
-              email: this.email,
-              uid: this.uid,
-              hoge: "hogehoge",
-            },
+        .post("/auth", {
+          user: {
+            name: this.name,
+            email: this.email,
+            uid: this.uid,
           },
-          { headers: { Authorization: data.token } }
-        )
+        })
         .then((res) => {
           this.$store.commit("setUser", res.data);
           this.$router.push("/");
