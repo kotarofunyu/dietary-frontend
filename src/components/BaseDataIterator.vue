@@ -290,9 +290,7 @@ export default {
     },
     getMonthly() {
       this.axios
-        .get(`/monthly?month=${this.selectedMonth}`, {
-          headers: { Authorization: this.$store.state.authToken },
-        })
+        .get(`/monthly?month=${this.selectedMonth}`)
         .then((response) => {
           this.monthly = response.data;
         })
