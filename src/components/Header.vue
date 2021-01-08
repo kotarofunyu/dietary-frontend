@@ -30,11 +30,11 @@
             </v-list-item-content>
           </v-list-item>
           <p></p>
-          <FormModal />
           <LoginModal />
         </v-list>
       </v-navigation-drawer>
     </div>
+    <FormModal />
   </div>
 </template>
 

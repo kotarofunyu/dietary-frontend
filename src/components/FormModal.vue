@@ -2,8 +2,8 @@
   <v-dialog v-model="dialog" persistent :retain-focus="false" max-width="600px">
     <template v-slot:activator="{ on, attrs }">
       <v-row align="center">
-        <v-btn color="primary" align="center" dark v-bind="attrs" v-on="on"
-          >記録する</v-btn
+        <v-btn absolute bottom right fab small dark color="red" v-on="on"
+          ><v-icon>mdi-pencil</v-icon></v-btn
         >
       </v-row>
     </template>
