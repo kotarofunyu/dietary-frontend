@@ -90,11 +90,7 @@ export default {
       const data = { token };
       this.$store.commit("setAuthToken", data.token);
       this.axios
-        .post(
-          "/auth",
-          { user: { email: this.email } },
-          { headers: { Authorization: this.$store.state.authToken } }
-        )
+        .post("/auth", { user: { email: this.email } })
         .then((res) => {
           this.$store.commit("setUser", res.data);
           this.$router.push("/");
