@@ -79,6 +79,7 @@ export default {
           (res) => {
             console.log(res);
             this.getIdToken();
+            this.checkAuthToken();
           },
           (err) => {
             this.error = "ログインに失敗しました  ";
@@ -89,6 +90,9 @@ export default {
       const token = await firebase.auth().currentUser.getIdToken(true);
       const data = { token };
       this.$store.commit("setAuthToken", data.token);
+    },
+    checkAuthToken: function () {
+      console.log(this.$store.state.authToken);
       this.axios
         .post("/auth", { user: { email: this.email } })
         .then((res) => {
@@ -105,6 +109,8 @@ export default {
         .signOut()
         .then((res) => {
           this.$store.commit("setUser", null);
+          this.$store.commit("setAuthToken", "");
+          this.$store.commit("setWeightsDatas", []);
           this.$router.push("/");
         })
         .catch((error) => {

@@ -5,7 +5,7 @@ import hoge from '../plugins/firebase'
 console.log(hoge)
 console.log(store)
 
-export default axios.create({
+const baseAxios = axios.create({
   baseURL: process.env.VUE_APP_API_ENDPOINT,
   headers: {
     'Content-Type': 'application/json',
@@ -17,3 +17,5 @@ axios.interceptors.request.use(hoge => {
   console.log(hoge.url)
   return hoge
 })
+
+export default baseAxios
