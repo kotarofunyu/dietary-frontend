@@ -3,6 +3,14 @@
     <div id="test">
       <v-app-bar app clipped-left dark color="#039BE5">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+        <p>aaaaa</p>
+        <v-spacer></v-spacer>
+        <v-avatar color="primary" size="48" v-if="user">
+          <span>kotaro</span>
+        </v-avatar>
+        <v-avatar color="primary" size="48" v-else>
+          <span>NoUser</span>
+        </v-avatar>
       </v-app-bar>
       <v-navigation-drawer
         v-model="drawer"
