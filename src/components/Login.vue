@@ -109,6 +109,8 @@ export default {
         .signOut()
         .then((res) => {
           this.$store.commit("setUser", null);
+          this.$store.commit("setAuthToken", "");
+          this.$store.commit("setWeightsDatas", []);
           this.$router.push("/");
         })
         .catch((error) => {
