@@ -29,6 +29,7 @@
               <v-list-item-title>{{ item.title }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+          <p></p>
           <FormModal />
           <LoginModal />
         </v-list>
@@ -54,19 +55,9 @@ export default {
       drawer: true,
       items: [
         {
-          title: "ホーム",
-          icon: "mdi-home",
-          link: "/",
-        },
-        {
           title: "記録閲覧",
           icon: "mdi-align-vertical-bottom",
           link: "/record",
-        },
-        {
-          title: "記録する",
-          icon: "mdi-lead-pencil",
-          link: "/create",
         },
       ],
     };
@@ -101,12 +92,14 @@ export default {
         function (user) {
           if (user) {
             const refresh_token = user.refreshToken;
+            console.log(`リフレッシュトークン: ${refresh_token}`);
             plainAxios
               .post(
                 `https://securetoken.googleapis.com/v1/token?key=${process.env.VUE_APP_API_KEY}`,
                 { grant_type: "refresh_token", refresh_token: refresh_token }
               )
               .then((res) => {
+                console.log(`authToken: ${res.data.access_token}`);
                 this.$store.commit("setAuthToken", res.data.access_token);
               })
               .catch((error) => {
