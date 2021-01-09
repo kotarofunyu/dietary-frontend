@@ -87,28 +87,30 @@ export default {
         });
     },
     checkSignedIn() {
-      firebase.auth().onAuthStateChanged(
-        function (user) {
-          if (user) {
-            const refresh_token = user.refreshToken;
-            console.log(`リフレッシュトークン: ${refresh_token}`);
-            plainAxios
-              .post(
-                `https://securetoken.googleapis.com/v1/token?key=${process.env.VUE_APP_API_KEY}`,
-                { grant_type: "refresh_token", refresh_token: refresh_token }
-              )
-              .then((res) => {
-                console.log(`authToken: ${res.data.access_token}`);
-                this.$store.commit("setAuthToken", res.data.access_token);
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-          } else {
-            alert("有効期限が切れているか、ログインしていません。");
-          }
-        }.bind(this)
-      );
+      if (this.user) {
+        firebase.auth().onAuthStateChanged(
+          function (user) {
+            if (user) {
+              const refresh_token = user.refreshToken;
+              console.log(`リフレッシュトークン: ${refresh_token}`);
+              plainAxios
+                .post(
+                  `https://securetoken.googleapis.com/v1/token?key=${process.env.VUE_APP_API_KEY}`,
+                  { grant_type: "refresh_token", refresh_token: refresh_token }
+                )
+                .then((res) => {
+                  console.log(`authToken: ${res.data.access_token}`);
+                  this.$store.commit("setAuthToken", res.data.access_token);
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+            } else {
+              alert("有効期限が切れているか、ログインしていません。");
+            }
+          }.bind(this)
+        );
+      }
     },
   },
 };
