@@ -3,7 +3,7 @@
     <template v-slot:activator="{ on, attrs }">
       <v-row align="center">
         <v-btn
-          absolute
+          fixed
           bottom
           right
           fab
