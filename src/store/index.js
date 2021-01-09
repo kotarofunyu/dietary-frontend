@@ -6,7 +6,6 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    signedIn: '',
     weightsDatas: [],
     weights: [],
     dates: [],
@@ -15,11 +14,18 @@ const store = new Vuex.Store({
     authToken: ''
   },
   plugins: [
-    createPersistedState({
-      key: 'loggedIn',
-      path: ['currentUser'],
-      storage: window.sessionStorage
-    })
+    createPersistedState(
+      {
+        key: 'loggedIn',
+        path: ['currentUser'],
+        storage: window.sessionStorage
+      },
+      {
+        key: 'authToken',
+        path: ['authToken'],
+        storage: window.sessionStorage
+      }
+    )
   ],
   mutations: {
     setWeightsDatas(state, weightsDatas) {
