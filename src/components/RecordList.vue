@@ -87,20 +87,14 @@ export default {
         this.axios
           .delete("/weights/" + id, { data: { id: id } })
           .then((response) => {
-            this.deleteItemFromItems(this.items, id);
+            this.$store.dispatch("getWeightsDatas");
             this.isDeleteDone = true;
           })
           .catch((errors) => {
             this.isError = true;
+            console.log(errors);
           });
       }
-    },
-    deleteItemFromItems(array, id) {
-      array.forEach((item, index) => {
-        if (item.id === id) {
-          array.splice(index, 1);
-        }
-      });
     },
   },
 };

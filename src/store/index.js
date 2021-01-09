@@ -22,9 +22,6 @@ const store = new Vuex.Store({
     })
   ],
   mutations: {
-    fetchSignedIn(state) {
-      state.signedIn = !!localStorage.signedIn
-    },
     setWeightsDatas(state, weightsDatas) {
       state.weightsDatas = weightsDatas
       state.weights = weightsDatas.map(item => item.weight)
@@ -39,11 +36,8 @@ const store = new Vuex.Store({
     }
   },
   actions: {
-    doFetchSignedIn({ commit }) {
-      commit('fetchSignedIn')
-    },
-    async getWeightsDatas({ commit }) {
-      await axios
+    getWeightsDatas({ commit }) {
+      axios
         .get('http://localhost:3000/weights', {
           headers: { Authorization: this.state.authToken }
         })
@@ -54,7 +48,6 @@ const store = new Vuex.Store({
     getAuthToken(authToken) {
       commit('setAuthToken', authToken)
     }
-  },
-  modules: {}
+  }
 })
 export default store
