@@ -50,6 +50,9 @@ export default {
   components: {
     FormModal,
   },
+  props: {
+    weights: null,
+  },
   data() {
     return {
       isDeleteDone: false,
@@ -75,11 +78,6 @@ export default {
         },
       ],
     };
-  },
-  computed: {
-    weights() {
-      return this.$store.state.weightsDatas;
-    },
   },
   methods: {
     deleteData(id) {

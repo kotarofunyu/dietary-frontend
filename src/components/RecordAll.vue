@@ -4,7 +4,7 @@
       <LineChart :data="chartData" :options="chartOptions" :width="800" :height="500" />
     </v-row>
     <v-row>
-      <RecordList />
+      <RecordList :weights="weights" />
     </v-row>
   </div>
 </template>
@@ -18,6 +18,9 @@ export default {
     RecordList,
   },
   computed: {
+    weights() {
+      return this.$store.state.weightsDatas;
+    },
     chartData() {
       const data = {
         labels: this.$store.state.dates,
