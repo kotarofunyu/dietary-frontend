@@ -19,15 +19,7 @@
           </v-list>
         </v-menu>
       </v-app-bar>
-      <v-navigation-drawer
-        v-model="drawer"
-        absolute
-        color="#039BE5"
-        permanent="permanent"
-        dark
-        app
-        clipped
-      >
+      <v-navigation-drawer v-model="drawer" color="#039BE5" dark app clipped>
         <v-list>
           <v-list-item v-for="item in items" :key="item.title" :to="item.link">
             <v-list-item-icon>
