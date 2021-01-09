@@ -1,50 +1,22 @@
 <script>
-import { Line } from "vue-chartjs";
+import { Line, mixins } from "vue-chartjs";
 import axios from "axios";
 import { mapState } from "vuex";
 export default {
   name: "LineChart",
   extends: Line,
-  data() {
-    return {
-      data: {
-        labels: [],
-        datasets: [
-          {
-            lineTention: 0,
-            label: "体重",
-            data: [],
-          },
-        ],
-      },
-      options: {
-        scales: {
-          xAxes: [
-            {
-              scaleLabel: {
-                display: true,
-                labelString: "Month",
-              },
-            },
-          ],
-          yAxes: [
-            {
-              ticks: {
-                beginAtZero: true,
-                stepSize: 0.5,
-                min: 85,
-              },
-            },
-          ],
-        },
-      },
-    };
+  mixins: [mixins.reactiveData],
+  props: {
+    data: null,
+    options: null,
   },
   mounted() {
-    this.$store.dispatch("getWeightsDatas");
-    this.data.labels = this.$store.state.dates;
-    this.data.datasets[0].data = this.$store.state.weights;
-    this.renderChart(this.data, this.options);
+    this.chartData = this.data;
+  },
+  watch: {
+    data: function () {
+      this.chartData = this.data;
+    },
   },
 };
 </script>
