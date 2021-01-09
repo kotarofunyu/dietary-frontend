@@ -1,9 +1,5 @@
 import axios from 'axios'
 import store from '../store/index.js'
-import hoge from '../plugins/firebase'
-
-console.log(hoge)
-console.log(store)
 
 const baseAxios = axios.create({
   baseURL: process.env.VUE_APP_API_ENDPOINT,
