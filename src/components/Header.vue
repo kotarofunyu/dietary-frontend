@@ -3,24 +3,24 @@
     <div id="test">
       <v-app-bar app clipped-left dark color="#039BE5">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+        <p>dietary</p>
+        <v-spacer></v-spacer>
+        <v-menu top>
+          <template v-slot:activator="{ on, attrs }">
+            <v-avatar color="primary" size="48" v-bind="attrs" v-on="on">
+              <span v-if="user">{{ user.name }}</span>
+              <span v-else>NoUser</span>
+            </v-avatar>
+          </template>
+          <v-list>
+            <v-list-item>
+              <v-list-item-title><LoginModal /></v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
       </v-app-bar>
-      <v-navigation-drawer
-        v-model="drawer"
-        color="#039BE5"
-        permanent="permanent"
-        dark
-        app
-      >
+      <v-navigation-drawer v-model="drawer" color="#039BE5" dark app clipped>
         <v-list>
-          <v-list-item two-line class="px-0" v-if="user">
-            <v-list-item-avatar>
-              <img src="https://randomuser.me/api/portraits/men/81.jpg" />
-            </v-list-item-avatar>
-            <v-list-item-content>
-              <v-list-item-title>{{ user.name }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-divider></v-divider>
           <v-list-item v-for="item in items" :key="item.title" :to="item.link">
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
@@ -30,11 +30,10 @@
             </v-list-item-content>
           </v-list-item>
           <p></p>
-          <FormModal />
-          <LoginModal />
         </v-list>
       </v-navigation-drawer>
     </div>
+    <FormModal />
   </div>
 </template>
 
@@ -52,7 +51,7 @@ export default {
   },
   data() {
     return {
-      drawer: true,
+      drawer: false,
       items: [
         {
           title: "記録閲覧",
