@@ -71,25 +71,21 @@ export default {
     },
   },
   methods: {
-    signIn: function () {
-      firebase
+    signIn: async function () {
+      await this.connectFirebase();
+      await this.getIdToken();
+      this.checkAuthToken();
+    },
+    connectFirebase: async function () {
+      await firebase
         .auth()
-        .signInWithEmailAndPassword(this.email, this.password)
-        .then(
-          (res) => {
-            console.log(res);
-            this.getIdToken();
-            this.checkAuthToken();
-          },
-          (err) => {
-            this.error = "ログインに失敗しました  ";
-          }
-        );
+        .signInWithEmailAndPassword(this.email, this.password);
     },
     getIdToken: async function () {
       const token = await firebase.auth().currentUser.getIdToken(true);
       const data = { token };
       this.$store.commit("setAuthToken", data.token);
+      console.log(this.$store.state.authToken);
     },
     checkAuthToken: function () {
       console.log(this.$store.state.authToken);
@@ -97,6 +93,7 @@ export default {
         .post("/auth", { user: { email: this.email } })
         .then((res) => {
           this.$store.commit("setUser", res.data);
+          this.$store.dispatch("getWeightsDatas");
           this.$router.push("/");
         })
         .catch((err) => {
