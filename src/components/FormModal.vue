@@ -2,7 +2,17 @@
   <v-dialog v-model="dialog" persistent :retain-focus="false" max-width="600px">
     <template v-slot:activator="{ on, attrs }">
       <v-row align="center">
-        <v-btn absolute bottom right fab small dark color="red" v-on="on"
+        <v-btn
+          absolute
+          bottom
+          right
+          fab
+          small
+          dark
+          color="red"
+          v-on="on"
+          v-if="user"
+          id="floatingBtn"
           ><v-icon>mdi-pencil</v-icon></v-btn
         >
       </v-row>
@@ -94,6 +104,9 @@ export default {
       const value = Number(this.weight);
       return Number.isNaN(value);
     },
+    user() {
+      return this.$store.state.currentUser;
+    },
   },
   methods: {
     submit() {
@@ -122,3 +135,9 @@ export default {
   },
 };
 </script>
+<style>
+#floatingBtn {
+  bottom: 35px;
+  right: 35px;
+}
+</style>
