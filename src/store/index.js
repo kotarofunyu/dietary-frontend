@@ -42,8 +42,8 @@ const store = new Vuex.Store({
     doFetchSignedIn({ commit }) {
       commit('fetchSignedIn')
     },
-    getWeightsDatas({ commit }) {
-      axios
+    async getWeightsDatas({ commit }) {
+      await axios
         .get('http://localhost:3000/weights', {
           headers: { Authorization: this.state.authToken }
         })
