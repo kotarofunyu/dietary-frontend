@@ -17,7 +17,7 @@
       >
       <v-data-table
         :headers="headers"
-        :items="items"
+        :items="weights"
         item-key="id"
         :items-per-page="7"
       >
@@ -74,12 +74,12 @@ export default {
           value: "action",
         },
       ],
-      items: [],
     };
   },
-  mounted() {
-    this.$store.dispatch("getWeightsDatas");
-    this.items = this.$store.state.weightsDatas;
+  computed: {
+    weights() {
+      return this.$store.state.weightsDatas;
+    },
   },
   methods: {
     deleteData(id) {
