@@ -1,26 +1,23 @@
 <template lang="">
   <div>
-    <BaseCalendar :weights-data="weightsData" />
-    <BaseDataIterator :weights-data="weightsData" />
+    <BaseCalendar :weights-data="weights" />
+    <BaseDataIterator :weights-data="weights" />
   </div>
 </template>
 <script>
-import BaseCalendar from './BaseCalendar'
-import BaseDataIterator from './BaseDataIterator'
+import BaseCalendar from "./BaseCalendar";
+import BaseDataIterator from "./BaseDataIterator";
 export default {
   name: "RecordAnalytics",
   components: {
     BaseCalendar,
-    BaseDataIterator
+    BaseDataIterator,
   },
-  data() {
-    return {
-      weightsData: this.$store.state.weightsDatas,
-    }
+  computed: {
+    weights() {
+      return this.$store.state.weightsDatas;
+    },
   },
-  mounted: function() {
-    this.$store.dispatch("getWeightsDatas");
-  }
 };
 </script>
 <style lang="">
