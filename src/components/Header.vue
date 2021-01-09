@@ -3,7 +3,7 @@
     <div id="test">
       <v-app-bar app clipped-left dark color="#039BE5">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-        <p>aaaaa</p>
+        <p>dietary</p>
         <v-spacer></v-spacer>
         <v-avatar color="primary" size="48" v-if="user">
           <span v-if="user">{{ user.name }}</span>
@@ -16,6 +16,7 @@
         permanent="permanent"
         dark
         app
+        clipped
       >
         <v-list>
           <v-list-item v-for="item in items" :key="item.title" :to="item.link">
