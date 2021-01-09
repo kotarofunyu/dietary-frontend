@@ -17,7 +17,7 @@
       >
       <v-data-table
         :headers="headers"
-        :items="items"
+        :items="weights"
         item-key="id"
         :items-per-page="7"
       >
@@ -74,12 +74,12 @@ export default {
           value: "action",
         },
       ],
-      items: [],
     };
   },
-  mounted() {
-    this.$store.dispatch("getWeightsDatas");
-    this.items = this.$store.state.weightsDatas;
+  computed: {
+    weights() {
+      return this.$store.state.weightsDatas;
+    },
   },
   methods: {
     deleteData(id) {
@@ -87,20 +87,14 @@ export default {
         this.axios
           .delete("/weights/" + id, { data: { id: id } })
           .then((response) => {
-            this.deleteItemFromItems(this.items, id);
+            this.$store.dispatch("getWeightsDatas");
             this.isDeleteDone = true;
           })
           .catch((errors) => {
             this.isError = true;
+            console.log(errors);
           });
       }
-    },
-    deleteItemFromItems(array, id) {
-      array.forEach((item, index) => {
-        if (item.id === id) {
-          array.splice(index, 1);
-        }
-      });
     },
   },
 };

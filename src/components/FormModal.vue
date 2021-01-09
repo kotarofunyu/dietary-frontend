@@ -122,6 +122,7 @@ export default {
           .then((response) => {
             this.obj = { date: "", weight: null, comment: "" };
             this.success = true;
+            this.$store.dispatch("getWeightsDatas");
             this.dialog = false;
           })
           .catch((error) => {
