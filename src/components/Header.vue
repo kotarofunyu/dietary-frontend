@@ -5,13 +5,23 @@
         <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
         <p>dietary</p>
         <v-spacer></v-spacer>
-        <v-avatar color="primary" size="48" v-if="user">
-          <span v-if="user">{{ user.name }}</span>
-          <span v-else>NoUser</span>
-        </v-avatar>
+        <v-menu top>
+          <template v-slot:activator="{ on, attrs }">
+            <v-avatar color="primary" size="48" v-bind="attrs" v-on="on">
+              <span v-if="user">{{ user.name }}</span>
+              <span v-else>NoUser</span>
+            </v-avatar>
+          </template>
+          <v-list>
+            <v-list-item>
+              <v-list-item-title><LoginModal /></v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
       </v-app-bar>
       <v-navigation-drawer
         v-model="drawer"
+        absolute
         color="#039BE5"
         permanent="permanent"
         dark
@@ -28,7 +38,6 @@
             </v-list-item-content>
           </v-list-item>
           <p></p>
-          <LoginModal />
         </v-list>
       </v-navigation-drawer>
     </div>
@@ -50,7 +59,7 @@ export default {
   },
   data() {
     return {
-      drawer: true,
+      drawer: false,
       items: [
         {
           title: "記録閲覧",
