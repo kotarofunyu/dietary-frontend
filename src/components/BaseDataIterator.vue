@@ -1,7 +1,7 @@
 <template lang="">
   <div>
     <v-data-iterator
-        :items="weekly"
+        :items="weekObject"
         :items-per-page.sync="itemsPerPage"
         :page="page"
         :search="search"
@@ -26,6 +26,15 @@
             ></v-text-field>
             <template v-if="$vuetify.breakpoint.mdAndUp">
               <v-spacer></v-spacer>
+              <v-select
+                v-model="selectedYear"
+                flat
+                solo-inverted
+                hide-details
+                :items="yearsArray"
+                prepend-inner-icon="mdi-magnify"
+                label="年を選択"
+              ></v-select>
               <v-select
                 v-model="selectedMonth"
                 flat
@@ -79,7 +88,7 @@
         <template v-slot:default="props">
           <v-row>
             <v-col
-              v-for="(value, index) in weekly"
+              v-for="(value, index) in weekObject"
               :key="index"
               cols="12"
               sm="6"
@@ -91,7 +100,7 @@
                   WEEK{{ index+1 }}
                 </v-card-title>
                 <v-card-subtitle v-if="weekAverage">
-                  Average {{ averages[index] }}kg
+                  Average {{ value.average }}kg
                 </v-card-subtitle>
                 <v-card-subtitle v-if="comparison">
                   前週比較 {{ averageDiffs[index] }}
@@ -99,7 +108,7 @@
                 <v-divider></v-divider>
                 <v-list dense>
                   <v-list-item
-                    v-for="item in value"
+                    v-for="item in value.week"
                     :key="item.date"
                   >
                     <v-list-item-content>
@@ -148,31 +157,6 @@
             </v-menu>
 
             <v-spacer></v-spacer>
-
-            <span
-              class="mr-4
-              grey--text"
-            >
-              Page {{ page }} of {{ numberOfPages }}
-            </span>
-            <v-btn
-              fab
-              dark
-              color="blue darken-3"
-              class="mr-1"
-              @click="formerPage"
-            >
-              <v-icon>mdi-chevron-left</v-icon>
-            </v-btn>
-            <v-btn
-              fab
-              dark
-              color="blue darken-3"
-              class="ml-1"
-              @click="nextPage"
-            >
-              <v-icon>mdi-chevron-right</v-icon>
-            </v-btn>
           </v-row>
         </template>
       </v-data-iterator>
@@ -197,100 +181,66 @@ export default {
       page: 1,
       itemsPerPage: 4,
       sortBy: "name",
+      yearsArray: [2020, 2021],
       monthsArray: Array(12)
         .fill(null)
         .map((_, i) => i + 1),
       selectedMonth: null,
+      selectedYear: null,
       monthly: null,
-      averages: [],
-      averageDiffs: [],
       weekAverage: false,
       comparison: false,
     };
   },
   computed: {
-    numberOfPages() {
-      return Math.ceil(this.weekly.length / this.itemsPerPage);
-    },
-    weekly() {
-      const weekly = [[], [], [], [], []];
+    weekObject() {
       if (!this.monthly) {
-        return weekly;
+        return [];
       }
-      const weightsData = this.monthly;
-      const amount = weightsData.length;
-      let i = 0;
-      weightsData.forEach((element) => {
-        if (i > amount) {
-          return;
-        }
-        if (i <= 6) {
-          weekly[0].push({
-            date: element.date,
-            weight: element.weight,
-          });
-        } else if (i <= 13) {
-          weekly[1].push({
-            date: element.date,
-            weight: element.weight,
-          });
-        } else if (i <= 20) {
-          weekly[2].push({
-            date: element.date,
-            weight: element.weight,
-          });
-        } else if (i <= 27) {
-          weekly[3].push({
-            date: element.date,
-            weight: element.weight,
-          });
-        } else if (i <= 31) {
-          weekly[4].push({
-            date: element.date,
-            weight: element.weight,
-          });
-        }
-        i += 1;
-      });
+      const weekObject = this.createWeekObjectFromMonthObject(this.monthly);
 
-      this.averages = [];
-      weekly.forEach((arr) => {
-        let weekWeights = arr.map((x) => x.weight);
-        let sum = weekWeights.reduce((sum, element) => sum + element, 0);
-        let av = sum / weekWeights.length;
-        this.averages.push(Math.round(av * Math.pow(10, 2)) / Math.pow(10, 2));
-        this.averages = this.averages.filter(Boolean);
-      });
-
-      console.log(this.averages);
-
-      return weekly;
-    },
-    getAverageDiffs() {
-      this.averageDiffs = [];
-      for (let i = 0; i < this.averages.length; i++) {
-        if ((i = 0)) {
-          this.averageDiffs.push(this.averages[i]);
-        } else {
-          this.averageDiffs.push(this.averages[i] - this.averages[i - 1]);
-        }
-      }
-      console.log(this.averageDiffs);
+      return this.setAverageToWeekObject(weekObject);
     },
   },
   methods: {
-    nextPage() {
-      if (this.page + 1 <= this.numberOfPages) this.page += 1;
+    calcSum(array) {
+      return array.reduce((sum, element) => sum + element, 0);
     },
-    formerPage() {
-      if (this.page - 1 >= 1) this.page -= 1;
+    calcAverage(array) {
+      let average = this.calcSum(array) / array.length;
+      return (average =
+        Math.round(average * Math.pow(10, 2)) / Math.pow(10, 2));
     },
-    updateItemsPerPage(number) {
-      this.itemsPerPage = number;
+    createWeightArrayFromObject(object) {
+      return object.week.map((x) => x.weight);
+    },
+    createWeekObjectFromMonthObject(monthObject) {
+      const arr = [0, 7, 14, 21, 28];
+      const weekObject = [];
+
+      arr.forEach((num) => {
+        let week = monthObject.slice(num, num + 7);
+        if (week.length) {
+          const weekItem = { week: week, average: null };
+          weekObject.push(weekItem);
+        }
+      });
+
+      return weekObject;
+    },
+    setAverageToWeekObject(weekObject) {
+      weekObject.forEach((element) => {
+        element.average = this.calcAverage(
+          this.createWeightArrayFromObject(element)
+        );
+      });
+      return weekObject;
     },
     getMonthly() {
       this.axios
-        .get(`/monthly?month=${this.selectedMonth}`)
+        .get("/monthly", {
+          params: { year: this.selectedYear, month: this.selectedMonth },
+        })
         .then((response) => {
           this.monthly = response.data;
         })
