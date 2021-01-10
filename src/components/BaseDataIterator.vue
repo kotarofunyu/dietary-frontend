@@ -188,16 +188,11 @@ export default {
       selectedMonth: null,
       selectedYear: null,
       monthly: null,
-      averages: [],
-      averageDiffs: [],
       weekAverage: false,
       comparison: false,
     };
   },
   computed: {
-    // numberOfPages() {
-    //   return Math.ceil(this.weekly.length / this.itemsPerPage);
-    // },
     weekObject() {
       if (!this.monthly) {
         return [];
@@ -206,25 +201,8 @@ export default {
 
       return this.setAverageToWeekObject(weekObject);
     },
-    getAverageDiffs() {
-      this.averageDiffs = [];
-      for (let i = 0; i < this.averages.length; i++) {
-        if ((i = 0)) {
-          this.averageDiffs.push(this.averages[i]);
-        } else {
-          this.averageDiffs.push(this.averages[i] - this.averages[i - 1]);
-        }
-      }
-      console.log(this.averageDiffs);
-    },
   },
   methods: {
-    // nextPage() {
-    //   if (this.page + 1 <= this.numberOfPages) this.page += 1;
-    // },
-    // formerPage() {
-    //   if (this.page - 1 >= 1) this.page -= 1;
-    // },
     calcSum(array) {
       return array.reduce((sum, element) => sum + element, 0);
     },
@@ -256,11 +234,7 @@ export default {
           this.createWeightArrayFromObject(element)
         );
       });
-
       return weekObject;
-    },
-    updateItemsPerPage(number) {
-      this.itemsPerPage = number;
     },
     getMonthly() {
       this.axios
