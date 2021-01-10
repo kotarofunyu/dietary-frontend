@@ -40,8 +40,8 @@ export default {
     weightsData: {
       type: Array,
       default: null,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -53,25 +53,25 @@ export default {
         { text: "月曜 - 日曜", value: [1, 2, 3, 4, 5, 6, 0] },
         { text: "月曜 - 金曜", value: [1, 2, 3, 4, 5] },
       ],
-      events: [],
       value: "",
-    }
+    };
   },
-  mounted: function() {
-    const events = []
-    this.$options.propsData.weightsData.forEach((element) => {
-      events.push({
-        name: String(element.weight),
-        start: new Date(element.date),
-        end: new Date(element.date),
-        color: "blue",
-        timed: false
-      })
-      this.events = events
-    })
-  }
-}
+  computed: {
+    events() {
+      const events = [];
+      this.weightsData.forEach((element) => {
+        events.push({
+          name: String(element.weight),
+          start: new Date(element.date),
+          end: new Date(element.date),
+          color: "blue",
+          timed: false,
+        });
+      });
+      return events;
+    },
+  },
+};
 </script>
 <style lang="">
-  
 </style>
