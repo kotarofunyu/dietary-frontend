@@ -226,8 +226,7 @@ export default {
     //   if (this.page - 1 >= 1) this.page -= 1;
     // },
     calcSum(array) {
-      let sum = array.reduce((sum, element) => sum + element, 0);
-      return sum;
+      return array.reduce((sum, element) => sum + element, 0);
     },
     calcAverage(array) {
       let average = this.calcSum(array) / array.length;
@@ -235,8 +234,7 @@ export default {
         Math.round(average * Math.pow(10, 2)) / Math.pow(10, 2));
     },
     createWeightArrayFromObject(object) {
-      const array = object.week.map((x) => x.weight);
-      return array;
+      return object.week.map((x) => x.weight);
     },
     createWeekObjectFromMonthObject(monthObject) {
       const arr = [0, 7, 14, 21, 28];
