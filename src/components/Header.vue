@@ -3,7 +3,8 @@
     <div id="test">
       <v-app-bar app clipped-left dark color="#039BE5">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-        <p>dietary</p>
+        <v-img max-height="50" max-width="50" src="@/assets/logo.png"></v-img>
+        <h1>dietary</h1>
         <v-spacer></v-spacer>
         <v-menu id="userMenu" top>
           <template v-slot:activator="{ on, attrs }">
@@ -92,14 +93,12 @@ export default {
           function (user) {
             if (user) {
               const refresh_token = user.refreshToken;
-              console.log(`リフレッシュトークン: ${refresh_token}`);
               plainAxios
                 .post(
                   `https://securetoken.googleapis.com/v1/token?key=${process.env.VUE_APP_API_KEY}`,
                   { grant_type: "refresh_token", refresh_token: refresh_token }
                 )
                 .then((res) => {
-                  console.log(`authToken: ${res.data.access_token}`);
                   this.$store.commit("setAuthToken", res.data.access_token);
                 })
                 .catch((error) => {
@@ -116,6 +115,11 @@ export default {
 };
 </script>
 <style>
+h1 {
+  font-size: 20px;
+  margin: auto 10px;
+  font-weight: bold;
+}
 #userMenu {
   top: 65px;
 }
