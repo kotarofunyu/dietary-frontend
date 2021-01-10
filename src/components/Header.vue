@@ -100,6 +100,7 @@ export default {
                 )
                 .then((res) => {
                   this.$store.commit("setAuthToken", res.data.access_token);
+                  console.log("authトークン取得済");
                 })
                 .catch((error) => {
                   console.log(error);
