@@ -85,10 +85,8 @@ export default {
       const token = await firebase.auth().currentUser.getIdToken(true);
       const data = { token };
       this.$store.commit("setAuthToken", data.token);
-      console.log(this.$store.state.authToken);
     },
     checkAuthToken: function () {
-      console.log(this.$store.state.authToken);
       this.axios
         .post("/auth", { user: { email: this.email } })
         .then((res) => {
