@@ -5,7 +5,7 @@
         <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
         <p>dietary</p>
         <v-spacer></v-spacer>
-        <v-menu top>
+        <v-menu id="userMenu" top>
           <template v-slot:activator="{ on, attrs }">
             <v-avatar color="primary" size="48" v-bind="attrs" v-on="on">
               <span v-if="user">{{ user.name }}</span>
@@ -115,3 +115,8 @@ export default {
   },
 };
 </script>
+<style>
+#userMenu {
+  top: 65px;
+}
+</style>

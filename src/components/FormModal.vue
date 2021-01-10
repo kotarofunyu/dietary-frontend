@@ -1,5 +1,11 @@
 <template v-slot:append>
-  <v-dialog v-model="dialog" persistent :retain-focus="false" max-width="600px">
+  <v-dialog
+    id="formModal"
+    v-model="dialog"
+    persistent
+    :retain-focus="false"
+    max-width="600px"
+  >
     <template v-slot:activator="{ on, attrs }">
       <v-row align="center">
         <v-btn
@@ -18,14 +24,41 @@
       </v-row>
     </template>
     <v-card id="form">
-      <v-card-title>フォーム</v-card-title>
+      <v-row id="title">
+        <v-card-title> フォーム </v-card-title>
+        <v-spacer></v-spacer>
+        <v-card-actions>
+          <v-btn color="white" text @click.stop="dialog = false">
+            <v-icon>mdi-close-outline</v-icon>
+          </v-btn>
+        </v-card-actions>
+      </v-row>
+
       <v-card-text>
         <v-form ref="form">
-          <v-date-picker
-            v-model="obj.date"
-            label="記録日"
-            :rules="[required]"
-          ></v-date-picker>
+          <v-menu
+            v-model="menu2"
+            :close-on-content-click="false"
+            :nudge-right="40"
+            transition="scale-transition"
+            offset-y
+            min-width="auto"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                v-model="obj.date"
+                label="Picker without buttons"
+                prepend-icon="mdi-calendar"
+                readonly
+                v-bind="attrs"
+                v-on="on"
+                :rules="[required]"
+              >
+              </v-text-field>
+            </template>
+            <v-date-picker v-model="obj.date" @input="menu2 = false">
+            </v-date-picker>
+          </v-menu>
           <v-text-field
             v-model.number="obj.weight"
             label="入力必須で文字数制限のあるテキストフィールド"
@@ -46,14 +79,10 @@
           <p v-show="notNumber">数値ではありません</p>
           <v-divider></v-divider>
           <v-card-actions>
-            <v-btn test @click="submit">送信する</v-btn>
+            <v-btn color="blue" large dark @click="submit"
+              ><v-icon>mdi-check-outline</v-icon>記録する</v-btn
+            >
             <span v-if="success">投稿しました!</span>
-          </v-card-actions>
-          <v-spacer></v-spacer>
-          <v-card-actions>
-            <v-btn color="grey" text @click.stop="dialog = false">
-              閉じる
-            </v-btn>
           </v-card-actions>
         </v-form>
       </v-card-text>
@@ -76,6 +105,7 @@ export default {
     return {
       dialog: false,
       success: false,
+      menu2: false,
       obj: {
         date: "",
         weight: null,
@@ -101,7 +131,7 @@ export default {
       },
     },
     notNumber() {
-      const value = Number(this.weight);
+      const value = Number(this.obj.weight);
       return Number.isNaN(value);
     },
     user() {
@@ -137,6 +167,13 @@ export default {
 };
 </script>
 <style>
+#form {
+  padding: 10px;
+}
+#title {
+  background: rgb(3, 155, 229);
+  color: white;
+}
 #floatingBtn {
   bottom: 35px;
   right: 35px;
