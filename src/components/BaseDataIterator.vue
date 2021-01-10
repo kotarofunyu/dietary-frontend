@@ -27,6 +27,15 @@
             <template v-if="$vuetify.breakpoint.mdAndUp">
               <v-spacer></v-spacer>
               <v-select
+                v-model="selectedYear"
+                flat
+                solo-inverted
+                hide-details
+                :items="yearsArray"
+                prepend-inner-icon="mdi-magnify"
+                label="年を選択"
+              ></v-select>
+              <v-select
                 v-model="selectedMonth"
                 flat
                 solo-inverted
@@ -197,10 +206,12 @@ export default {
       page: 1,
       itemsPerPage: 4,
       sortBy: "name",
+      yearsArray: [2020, 2021],
       monthsArray: Array(12)
         .fill(null)
         .map((_, i) => i + 1),
       selectedMonth: null,
+      selectedYear: null,
       monthly: null,
       averages: [],
       averageDiffs: [],
@@ -263,6 +274,7 @@ export default {
       });
 
       console.log(this.averages);
+      console.log(this.monthly);
 
       return weekly;
     },
@@ -290,7 +302,9 @@ export default {
     },
     getMonthly() {
       this.axios
-        .get(`/monthly?month=${this.selectedMonth}`)
+        .get("/monthly", {
+          params: { year: this.selectedYear, month: this.selectedMonth },
+        })
         .then((response) => {
           this.monthly = response.data;
         })
