@@ -103,7 +103,7 @@
                   Average {{ value.average }}kg
                 </v-card-subtitle>
                 <v-card-subtitle v-if="comparison">
-                  前週比較 {{ averageDiffs[index] }}
+                  前週比較 {{ value.averageDiff }}g
                 </v-card-subtitle>
                 <v-divider></v-divider>
                 <v-list dense>
@@ -199,7 +199,9 @@ export default {
       }
       const weekObject = this.createWeekObjectFromMonthObject(this.monthly);
 
-      return this.setAverageToWeekObject(weekObject);
+      return this.setAverageDiffToWeekObject(
+        this.setAverageToWeekObject(weekObject)
+      );
     },
   },
   methods: {
@@ -233,6 +235,18 @@ export default {
         element.average = this.calcAverage(
           this.createWeightArrayFromObject(element)
         );
+      });
+      return weekObject;
+    },
+    setAverageDiffToWeekObject(weekObject) {
+      weekObject.forEach((element, index) => {
+        if (index == 0) {
+          element.averageDiff = undefined;
+        } else {
+          let diff = weekObject[index].average - weekObject[index - 1].average;
+          element.averageDiff =
+            (Math.round(diff * Math.pow(10, 2)) / Math.pow(10, 2)) * 1000;
+        }
       });
       return weekObject;
     },
